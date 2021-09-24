@@ -898,6 +898,89 @@ ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.savefig('jss_figures/neural_network.png')
 plt.show()
 
+# plot 6a
+np.random.seed(0)
+
+time = np.linspace(0, 5 * np.pi, 1001)
+knots_51 = np.linspace(0, 5 * np.pi, 51)
+time_series = np.cos(2 * time) + np.cos(4 * time) + np.cos(8 * time)
+noise = np.random.normal(0, 1, len(time_series))
+time_series += noise
+
+advemdpy = EMD(time=time, time_series=time_series)
+imfs_51, hts_51, ifs_51 = advemdpy.empirical_mode_decomposition(knots=knots_51, max_imfs=3,
+                                                                edge_effect='symmetric_anchor', verbose=False)[:3]
+knots_31 = np.linspace(0, 5 * np.pi, 31)
+imfs_31, hts_31, ifs_31 = advemdpy.empirical_mode_decomposition(knots=knots_31, max_imfs=2,
+                                                                edge_effect='symmetric_anchor', verbose=False)[:3]
+knots_11 = np.linspace(0, 5 * np.pi, 11)
+imfs_11, hts_11, ifs_11 = advemdpy.empirical_mode_decomposition(knots=knots_11, max_imfs=1,
+                                                                edge_effect='symmetric_anchor', verbose=False)[:3]
+
+fig, axs = plt.subplots(3, 1)
+plt.suptitle(textwrap.fill('Comparison of Trends Extracted with Different Knot Sequences', 40))
+plt.subplots_adjust(hspace=0.1)
+axs[0].plot(time, time_series, label='Time series')
+axs[0].plot(time, imfs_51[1, :] + imfs_51[2, :] + imfs_51[3, :], label=textwrap.fill('Sum of IMF 1, IMF 2, & IMF 3 with 51 knots', 21))
+print(np.var(time_series - (imfs_51[1, :] + imfs_51[2, :] + imfs_51[3, :])))
+for knot in knots_51:
+    axs[0].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1)
+axs[0].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1, label='Knots')
+axs[0].set_xticks([0, np.pi, 2 * np.pi, 3 * np.pi, 4 * np.pi, 5 * np.pi])
+axs[0].set_xticklabels(['', '', '', '', '', ''])
+box_0 = axs[0].get_position()
+axs[0].set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.85, box_0.height])
+axs[0].legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
+
+axs[1].plot(time, time_series, label='Time series')
+axs[1].plot(time, imfs_31[1, :] + imfs_31[2, :], label=textwrap.fill('Sum of IMF 1 and IMF 2 with 31 knots', 19))
+axs[1].plot(time, imfs_51[2, :] + imfs_51[3, :], label=textwrap.fill('Sum of IMF 2 and IMF 3 with 51 knots', 19))
+print(np.var(time_series - (imfs_31[1, :] + imfs_31[2, :])))
+for knot in knots_31:
+    axs[1].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1)
+axs[1].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1, label='Knots')
+axs[1].set_xticks([0, np.pi, 2 * np.pi, 3 * np.pi, 4 * np.pi, 5 * np.pi])
+axs[1].set_xticklabels(['', '', '', '', '', ''])
+box_1 = axs[1].get_position()
+axs[1].set_position([box_1.x0 - 0.05, box_1.y0, box_1.width * 0.85, box_1.height])
+axs[1].legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
+
+axs[2].plot(time, time_series, label='Time series')
+axs[2].plot(time, imfs_11[1, :], label='IMF 1 with 11 knots')
+axs[2].plot(time, imfs_31[2, :], label='IMF 2 with 31 knots')
+axs[2].plot(time, imfs_51[3, :], label='IMF 3 with 51 knots')
+print(np.var(time_series - imfs_51[3, :]))
+for knot in knots_11:
+    axs[2].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1)
+axs[2].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1, label='Knots')
+axs[2].set_xticks([0, np.pi, 2 * np.pi, 3 * np.pi, 4 * np.pi, 5 * np.pi])
+axs[2].set_xticklabels(['$0$', r'$\pi$', r'$2\pi$', r'$3\pi$', r'$4\pi$', r'$5\pi$'])
+box_2 = axs[2].get_position()
+axs[2].set_position([box_2.x0 - 0.05, box_2.y0, box_2.width * 0.85, box_2.height])
+axs[2].legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
+plt.savefig('jss_figures/DFA_different_trends.png')
+plt.show()
+
+hs_ouputs = hilbert_spectrum(time, imfs_51, hts_51, ifs_51, max_frequency=12, plot=False)
+
+# plot 6b
+ax = plt.subplot(111)
+plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of Simple Sinusoidal Time Seres with Added Noise', 50))
+x_hs, y, z = hs_ouputs
+z_min, z_max = 0, np.abs(z).max()
+ax.pcolormesh(x_hs, y, np.abs(z), cmap='gist_rainbow', vmin=z_min, vmax=z_max)
+ax.plot(x_hs[0, :], 8 * np.ones_like(x_hs[0, :]), '--', label=r'$\omega = 8$', Linewidth=3)
+ax.plot(x_hs[0, :], 4 * np.ones_like(x_hs[0, :]), '--', label=r'$\omega = 4$', Linewidth=3)
+ax.plot(x_hs[0, :], 2 * np.ones_like(x_hs[0, :]), '--', label=r'$\omega = 2$', Linewidth=3)
+plt.ylabel(r'Frequency (rad.s$^{-1}$)')
+plt.xlabel('Time (s)')
+
+box_0 = ax.get_position()
+ax.set_position([box_0.x0, box_0.y0 + 0.05, box_0.width * 0.85, box_0.height * 0.9])
+ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+plt.savefig('jss_figures/DFA_hilbert_spectrum.png')
+plt.show()
+
 # plot 7
 a = 0.25
 width = 0.2
