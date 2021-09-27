@@ -11,11 +11,16 @@ import cvxpy as cvx
 import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
+from scipy.ndimage import gaussian_filter
 from emd_utils import time_extension, Utility
 from scipy.interpolate import CubicSpline
 from emd_hilbert import Hilbert, hilbert_spectrum
 from emd_preprocess import Preprocess
 from AdvEMDpy import EMD
+
+# alternate packages
+from PyEMD import EMD as pyemd0215
+import emd as emd040
 
 sns.set(style='darkgrid')
 
@@ -1201,66 +1206,79 @@ for ax in axs.flat:
 plt.savefig('jss_figures/Duffing_equation.png')
 plt.show()
 
-emd_Hilbert_example = Hilbert(time=t, time_series=x)
+# compare other packages Duffing - top
 
-t_stft, f_stft, z_stft = emd_Hilbert_example.stft_custom(window_width=1024, angular_frequency=False)
-t_morlet, f_morlet, z_morlet = emd_Hilbert_example.morlet_wavelet_custom(window_width=1024, angular_frequency=False)
+pyemd = pyemd0215()
+py_emd = pyemd(x)
+IP, IF, IA = emd040.spectra.frequency_transform(py_emd.T, 10, 'hilbert')
+freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 0.2, 100)
+hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)
+hht = gaussian_filter(hht, sigma=1)
+ax = plt.subplot(111)
+plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of Duffing Equation using PyEMD 0.2.15', 40))
+plt.pcolormesh(t, freq_bins, hht, cmap='gist_rainbow', vmin=0, vmax=np.max(np.max(np.abs(hht))))
+plt.plot(t[:-1], 0.124 * np.ones_like(t[:-1]), '--', label=textwrap.fill('Hamiltonian frequency approximation', 15))
+plt.plot(t[:-1], 0.04 * np.ones_like(t[:-1]), 'g--', label=textwrap.fill('Driving function frequency', 15))
+plt.xticks([0, 50, 100, 150])
+plt.yticks([0, 0.1, 0.2])
+plt.ylabel('Frequency (Hz)')
+plt.xlabel('Time (s)')
 
-# joint plot
-
-fig, axs = plt.subplots(1, 2)
-plt.subplots_adjust(hspace=0.5)
-axs[0].pcolormesh(t_stft, f_stft, np.abs(z_stft), vmin=0, vmax=np.max(np.max(np.abs(z_stft))))
-axs[0].set_ylim(0, 0.5)
-axs[0].plot(t_morlet, 0.124 * np.ones_like(t_morlet), 'b--')
-axs[0].plot(t_morlet, 0.04 * np.ones_like(t_morlet), 'g--')
-axs[1].pcolormesh(t_morlet, f_morlet, np.abs(z_morlet), vmin=0, vmax=np.max(np.max(np.abs(z_morlet))))
-axs[1].set_ylim(0, 0.5)
-axs[1].plot(t_morlet, 0.124 * np.ones_like(t_morlet), 'b--',
-            label=textwrap.fill('Hamiltonian frequency approximation', 15))
-axs[1].plot(t_morlet, 0.04 * np.ones_like(t_morlet), 'g--',
-            label=textwrap.fill('Driving function frequency', 15))
-axs[1].legend(loc='upper right')
-
-axis = 0
-for ax in axs.flat:
-    if axis == 0:
-        ax.set(ylabel='Frequency ($Hz$)')
-        ax.set(xlabel='Time ($s$)')
-    if axis == 1:
-        ax.set(xlabel='Time ($s$)')
-    axis += 1
-
-plt.gcf().subplots_adjust(bottom=0.15)
-
-axs[0].set_title(r'$ |\mathcal{STF}(x(t))(t,f)|^2 $')
-axs[1].set_title(r'$ |\mathcal{MW}(x(t))(t,f)|^2 $')
-
-plt.gcf().subplots_adjust(bottom=0.15)
-plt.savefig('jss_figures/Duffing_equation_STFT_MWT.png')
+box_0 = ax.get_position()
+ax.set_position([box_0.x0, box_0.y0 + 0.05, box_0.width * 0.75, box_0.height * 0.9])
+ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+plt.savefig('jss_figures/Duffing_equation_ht_pyemd.png')
 plt.show()
 
-t_knots = np.linspace(0, 150, 151)
-emd_duffing = AdvEMDpy.EMD(time=t, time_series=x)
-emd_duff, emd_ht_duff, emd_if_duff, _, _, _, _ = emd_duffing.empirical_mode_decomposition(knots=t_knots, knot_time=t)
+plt.show()
 
-fig, axs = plt.subplots(3, 1)
+emd_sift = emd040.sift.sift(x)
+IP, IF, IA = emd040.spectra.frequency_transform(emd_sift, 10, 'hilbert')
+freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 0.2, 100)
+hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)
+hht = gaussian_filter(hht, sigma=1)
+ax = plt.subplot(111)
+plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of Duffing Equation using emd 0.4.0', 40))
+plt.pcolormesh(t, freq_bins, hht, cmap='gist_rainbow', vmin=0, vmax=np.max(np.max(np.abs(hht))))
+plt.plot(t[:-1], 0.124 * np.ones_like(t[:-1]), '--', label=textwrap.fill('Hamiltonian frequency approximation', 15))
+plt.plot(t[:-1], 0.04 * np.ones_like(t[:-1]), 'g--', label=textwrap.fill('Driving function frequency', 15))
+plt.xticks([0, 50, 100, 150])
+plt.yticks([0, 0.1, 0.2])
+plt.ylabel('Frequency (Hz)')
+plt.xlabel('Time (s)')
+
+box_0 = ax.get_position()
+ax.set_position([box_0.x0, box_0.y0 + 0.05, box_0.width * 0.75, box_0.height * 0.9])
+ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+plt.savefig('jss_figures/Duffing_equation_ht_emd.png')
+plt.show()
+
+plt.show()
+
+# compare other packages Duffing - bottom
+
+emd_duffing = AdvEMDpy.EMD(time=t, time_series=x)
+emd_duff, emd_ht_duff, emd_if_duff, _, _, _, _ = emd_duffing.empirical_mode_decomposition(verbose=False)
+
+fig, axs = plt.subplots(2, 1)
 plt.subplots_adjust(hspace=0.3)
-axs[0].plot(t, emd_duff[1, :])
+axs[0].plot(t, emd_duff[1, :], label='AdvEMDpy')
+axs[0].plot(t, py_emd[0, :], '--', label='PyEMD 0.2.15')
+axs[0].plot(t, emd_sift[:, 0], '--', label='emd 0.4.0')
 axs[0].set_title('IMF 1')
 axs[0].set_ylim([-2, 2])
 axs[0].set_xlim([0, 150])
 
-axs[1].plot(t, emd_duff[2, :])
+axs[1].plot(t, emd_duff[2, :], label='AdvEMDpy')
+print(sum(abs(0.1 * np.cos(0.04 * 2 * np.pi * t) - emd_duff[2, :])))
+axs[1].plot(t, py_emd[1, :], '--', label='PyEMD 0.2.15')
+print(sum(abs(0.1 * np.cos(0.04 * 2 * np.pi * t) - py_emd[1, :])))
+axs[1].plot(t, emd_sift[:, 1], '--', label='emd 0.4.0')
+print(sum(abs(0.1 * np.cos(0.04 * 2 * np.pi * t) - emd_sift[:, 1])))
 axs[1].plot(t, 0.1 * np.cos(0.04 * 2 * np.pi * t), '--', label=r'$0.1$cos$(0.08{\pi}t)$')
 axs[1].set_title('IMF 2')
 axs[1].set_ylim([-0.2, 0.4])
 axs[1].set_xlim([0, 150])
-
-axs[2].plot(t, emd_duff[3, :])
-axs[2].set_title('IMF 3')
-axs[2].set_ylim([-0.1, 0.1])
-axs[2].set_xlim([0, 150])
 
 axis = 0
 for ax in axs.flat:
@@ -1271,11 +1289,9 @@ for ax in axs.flat:
     if axis == 1:
         ax.set_ylabel(r'$\gamma_2(t)$')
         ax.set_yticks([-0.2, 0, 0.2])
-        ax.legend(loc='upper left')
-    if axis == 2:
-        ax.set_ylabel(r'$\gamma_3(t)$')
-        ax.set(xlabel=r'$t$')
-        ax.set_yticks([-0.1, 0, 0.1])
+    box_0 = ax.get_position()
+    ax.set_position([box_0.x0, box_0.y0, box_0.width * 0.85, box_0.height])
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
     ax.set_xticks(x_points)
     ax.set_xticklabels(x_names)
     axis += 1
@@ -1285,8 +1301,8 @@ plt.show()
 hs_ouputs = hilbert_spectrum(t, emd_duff, emd_ht_duff, emd_if_duff, max_frequency=1.3, plot=False)
 
 ax = plt.subplot(111)
-plt.title('Gaussian Filtered Hilbert Spectrum of Duffing Equation')
-x_hs, y, z = hs_ouputs
+plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of Duffing Equation using AdvEMDpy', 40))
+x, y, z = hs_ouputs
 y = y / (2 * np.pi)
 z_min, z_max = 0, np.abs(z).max()
 ax.pcolormesh(x_hs, y, np.abs(z), cmap='gist_rainbow', vmin=z_min, vmax=z_max)
@@ -1319,49 +1335,56 @@ signal = np.asarray(signal)
 time = CO2_data['month']
 time = np.asarray(time)
 
-emd_Hilbert_example = Hilbert(time=time, time_series=signal)
+# compare other packages Carbon Dioxide - top
 
-t_stft, f_stft, z_stft = emd_Hilbert_example.stft_custom(window_width=128, angular_frequency=False)
-t_morlet, f_morlet, z_morlet = emd_Hilbert_example.morlet_wavelet_custom(window_width=128, angular_frequency=False)
-
-# joint plot
-
-fig, axs = plt.subplots(1, 2)
-plt.subplots_adjust(hspace=0.5)
-axs[0].pcolormesh(t_stft, f_stft, np.abs(z_stft), vmin=0, vmax=np.max(np.max(np.abs(z_stft))))
-axs[0].plot(t_morlet, np.ones_like(t_morlet), 'g--')
-axs[1].pcolormesh(t_morlet, f_morlet, np.abs(z_morlet), vmin=0, vmax=np.max(np.max(np.abs(z_morlet))))
-axs[1].plot(t_morlet, np.ones_like(t_morlet), 'g--', label=textwrap.fill('Annual cycle', 10))
-axs[1].legend(loc='upper right')
-
-axis = 0
-for ax in axs.flat:
-    if axis == 0:
-        ax.set(ylabel='Frequency (year$^{-1}$)')
-        ax.set(xlabel='Time (years)')
-    if axis == 1:
-        ax.set(xlabel='Time (years)')
-    axis += 1
-
-plt.gcf().subplots_adjust(bottom=0.15)
-
-axs[0].set_title(r'$ |\mathcal{STF}(g(t))(t,f)|^2 $')
-axs[1].set_title(r'$ |\mathcal{MW}(g(t))(t,f)|^2 $')
-
-plt.gcf().subplots_adjust(bottom=0.15)
-plt.savefig('jss_figures/CO2_STFT_Morlet.png')
+pyemd = pyemd0215()
+py_emd = pyemd(signal)
+IP, IF, IA = emd040.spectra.frequency_transform(py_emd[:2, :].T, 12, 'hilbert')
+print(sum(np.abs(IF[:, 0] - np.ones_like(IF[:, 0]))))
+freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 2, 100)
+hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)
+hht = gaussian_filter(hht, sigma=1)
+fig, ax = plt.subplots()
+plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of CO$_{2}$ Concentration using PyEMD 0.2.15', 45))
+plt.ylabel('Frequency (year$^{-1}$)')
+plt.xlabel('Time (years)')
+plt.pcolormesh(time, freq_bins, hht, cmap='gist_rainbow', vmin=0, vmax=np.max(np.max(np.abs(hht))))
+plt.plot(time, np.ones_like(time), 'k--', label=textwrap.fill('Annual cycle', 10))
+box_0 = ax.get_position()
+ax.set_position([box_0.x0 + 0.0125, box_0.y0 + 0.075, box_0.width * 0.8, box_0.height * 0.9])
+ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+plt.savefig('jss_figures/CO2_Hilbert_pyemd.png')
+plt.show()
 plt.show()
 
-# joint plot
+emd_sift = emd040.sift.sift(signal)
+IP, IF, IA = emd040.spectra.frequency_transform(emd_sift[:, :1], 12, 'hilbert')
+print(sum(np.abs(IF - np.ones_like(IF))))
+freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 2, 100)
+hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)
+hht = gaussian_filter(hht, sigma=1)
+fig, ax = plt.subplots()
+plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of CO$_{2}$ Concentration using emd 0.4.0', 45))
+plt.ylabel('Frequency (year$^{-1}$)')
+plt.xlabel('Time (years)')
+plt.pcolormesh(time, freq_bins, hht, cmap='gist_rainbow', vmin=0, vmax=np.max(np.max(np.abs(hht))))
+plt.plot(time, np.ones_like(time), 'k--', label=textwrap.fill('Annual cycle', 10))
+box_0 = ax.get_position()
+ax.set_position([box_0.x0 + 0.0125, box_0.y0 + 0.075, box_0.width * 0.8, box_0.height * 0.9])
+ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+plt.savefig('jss_figures/CO2_Hilbert_emd.png')
+plt.show()
+plt.show()
 
-# emd
+# compare other packages Carbon Dioxide - bottom
 
 knots = np.linspace(time[0], time[-1], 200)
 
 emd_example = AdvEMDpy.EMD(time=time, time_series=signal)
 
 imfs, hts, ifs, _, _, _, _ = \
-    emd_example.empirical_mode_decomposition(knots=knots, knot_time=time)
+    emd_example.empirical_mode_decomposition(knots=knots, knot_time=time, verbose=False)
+print(sum(np.abs(ifs[1, :] / (2 * np.pi) - np.ones_like(ifs[1, :]))))
 
 fig, axs = plt.subplots(2, 2)
 plt.subplots_adjust(hspace=0.5)
@@ -1404,10 +1427,10 @@ y = y / (2 * np.pi)
 z_min, z_max = 0, np.abs(z).max()
 fig, ax = plt.subplots()
 ax.pcolormesh(x_hs, y, np.abs(z), cmap='gist_rainbow', vmin=z_min, vmax=z_max)
-ax.set_title(r'Instantaneous Frequency of CO$_{2}$ Concentration')
+ax.set_title(textwrap.fill(r'Gaussian Filtered Hilbert Spectrum of CO$_{2}$ Concentration using AdvEMDpy', 40))
 plt.ylabel('Frequency (year$^{-1}$)')
 plt.xlabel('Time (years)')
-plt.plot(t_morlet, np.ones_like(t_morlet), 'k--', label=textwrap.fill('Annual cycle', 10))
+plt.plot(x_hs[0, :], np.ones_like(x_hs[0, :]), 'k--', label=textwrap.fill('Annual cycle', 10))
 ax.axis([x_hs.min(), x_hs.max(), y.min(), y.max()])
 
 box_0 = ax.get_position()
