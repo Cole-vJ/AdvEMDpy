@@ -361,17 +361,17 @@ def stopping_criterion_fail_helper(intrinsic_mode_function_storage, intrinsic_mo
         if stopping_criterion == 'sd':
 
             print(f'IMF_{imf_count}{internal_iteration_count} Standard deviation STOPPING CRITERION MET with sd = '
-                  f'{np.str(np.round(calculated_threshold, 2))} < sd threshold = {stopping_criterion_threshold}')
+                  f'{str(np.round(calculated_threshold, 2))} < sd threshold = {stopping_criterion_threshold}')
 
         elif stopping_criterion == 'sd_11a':
 
             print(f'IMF_{imf_count}{internal_iteration_count} Standard deviation (11a) STOPPING CRITERION MET with '
-                  f'sd = {np.str(calculated_threshold)} < sd threshold = {stopping_criterion_threshold}')
+                  f'sd = {str(calculated_threshold)} < sd threshold = {stopping_criterion_threshold}')
 
         elif stopping_criterion == 'sd_11b':
 
             print(f'IMF_{imf_count}{internal_iteration_count} Standard deviation (11b) STOPPING CRITERION MET with '
-                  f'sd = {np.str(calculated_threshold)} < sd threshold = {stopping_criterion_threshold}')
+                  f'sd = {str(calculated_threshold)} < sd threshold = {stopping_criterion_threshold}')
 
         elif stopping_criterion == 'mft':
 
@@ -667,17 +667,17 @@ def stopping_criterion_pass_helper(intrinsic_mode_function_candidate, intrinsic_
         if stopping_criterion == 'sd':
 
             print(f'IMF_{imf_count}{internal_iteration_count} Standard deviation STOPPING CRITERION NOT MET '
-                  f'with sd = ' + np.str(np.round(calculated_threshold, 2)))
+                  f'with sd = ' + str(np.round(calculated_threshold, 2)))
 
         elif stopping_criterion == 'sd_11a':
 
             print(f'IMF_{imf_count}{internal_iteration_count} Standard deviation (11a) STOPPING CRITERION NOT MET '
-                  f'with sd = ' + np.str(calculated_threshold))
+                  f'with sd = ' + str(calculated_threshold))
 
         elif stopping_criterion == 'sd_11b':
 
             print(f'IMF_{imf_count}{internal_iteration_count} Standard deviation (11b) STOPPING CRITERION NOT MET '
-                  f'with sd = ' + np.str(calculated_threshold))
+                  f'with sd = ' + str(calculated_threshold))
 
         elif stopping_criterion == 'mft':
 
@@ -1423,7 +1423,7 @@ class EMD:
             ########################
 
             # need to make smoothing optional to replicate Huang paper results
-            if initial_smoothing and preprocess=='none':  # smooth initial signal
+            if initial_smoothing and preprocess =='none':  # smooth initial signal
                 time = knot_time
                 if matrix:  # use matrix constructed above to improve speed of algorithm - only B-splines
                     least_square_fit, least_square_fit_coef = \
