@@ -1253,8 +1253,6 @@ ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.savefig('jss_figures/Duffing_equation_ht_emd.png')
 plt.show()
 
-plt.show()
-
 # compare other packages Duffing - bottom
 
 emd_duffing = AdvEMDpy.EMD(time=t, time_series=x)
@@ -1305,7 +1303,7 @@ plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of Duffing Equation 
 x, y, z = hs_ouputs
 y = y / (2 * np.pi)
 z_min, z_max = 0, np.abs(z).max()
-ax.pcolormesh(x_hs, y, np.abs(z), cmap='gist_rainbow', vmin=z_min, vmax=z_max)
+ax.pcolormesh(x, y, np.abs(z), cmap='gist_rainbow', vmin=z_min, vmax=z_max)
 plt.plot(t[:-1], 0.124 * np.ones_like(t[:-1]), '--', label=textwrap.fill('Hamiltonian frequency approximation', 15))
 plt.plot(t[:-1], 0.04 * np.ones_like(t[:-1]), 'g--', label=textwrap.fill('Driving function frequency', 15))
 plt.xticks([0, 50, 100, 150])
@@ -1355,7 +1353,6 @@ ax.set_position([box_0.x0 + 0.0125, box_0.y0 + 0.075, box_0.width * 0.8, box_0.h
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.savefig('jss_figures/CO2_Hilbert_pyemd.png')
 plt.show()
-plt.show()
 
 emd_sift = emd040.sift.sift(signal)
 IP, IF, IA = emd040.spectra.frequency_transform(emd_sift[:, :1], 12, 'hilbert')
@@ -1373,7 +1370,6 @@ box_0 = ax.get_position()
 ax.set_position([box_0.x0 + 0.0125, box_0.y0 + 0.075, box_0.width * 0.8, box_0.height * 0.9])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.savefig('jss_figures/CO2_Hilbert_emd.png')
-plt.show()
 plt.show()
 
 # compare other packages Carbon Dioxide - bottom
