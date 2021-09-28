@@ -95,7 +95,7 @@ for i in range(iterations):
     beta = np.random.random_integers(low=-2, high=2)
     new_time_series = time_series + cn.powerlaw_psd_gaussian(beta, len(time_series)) * sd_time_series * fseemd_sd
     emd = EMD(time=time, time_series=new_time_series)
-    imfs = emd.empirical_mode_decomposition(smooth=True, stop_crit_threshold=1, max_imfs=3)[0]
+    imfs = emd.empirical_mode_decomposition(smooth=True, stop_crit_threshold=1, max_imfs=3, verbose=False)[0]
 
     imf_1 += imfs[2, :]
     imf_2 += imfs[3, :]
@@ -350,9 +350,6 @@ knots = np.linspace(0, 5 * np.pi, 51)
 
 modulated_freq = frequency(time, frequency_modulation_period, frequency_min, frequency_max)
 
-plt.plot(time[:-1], (modulated_freq[:-1] - modulated_freq[1:]) / (time[:-1] - time[1:]))
-plt.show()
-
 cum_signal_CAMF = np.cos(modulated_freq)
 
 m = 51
@@ -385,5 +382,3 @@ box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.04, box_0.y0 + 0.05, box_0.width * 0.9, box_0.height * 0.9])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.show()
-
-temp = 0

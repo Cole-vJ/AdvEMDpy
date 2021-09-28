@@ -63,9 +63,9 @@ Process finished with exit code 0
 
 ### Figure Output
 
-![](./EMD_README_Images/Figure_1.png)
+![](./README_Images/Figure_1.png)
 
-![](./EMD_README_Images/Figure_2.png)
+![](./README_Images/Figure_2.png)
 
 
 
@@ -285,12 +285,6 @@ intrinsic_mode_function_storage_coef : real ndarray (optional)
 
 knot_envelope : real ndarray (optional)
     Vector containing (possibly optimised) knots.
-
-intrinsic_mode_function_storage_emd_ht : real ndarray (optional)
-    EMD filtered Hilbert transform - smoothes extremes.
-
-intrinsic_mode_function_storage_emd_if : real ndarray (optional)
-    EMD filtered instantaneous frequency - smoothes extremes.
 
 intrinsic_mode_function_storage_dt_ht : real ndarray (optional)
     Discrete-time Hilbert transform.

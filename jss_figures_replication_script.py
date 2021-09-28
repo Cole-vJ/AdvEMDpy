@@ -1356,7 +1356,7 @@ plt.show()
 
 emd_sift = emd040.sift.sift(signal)
 IP, IF, IA = emd040.spectra.frequency_transform(emd_sift[:, :1], 12, 'hilbert')
-print(sum(np.abs(IF - np.ones_like(IF))))
+print(sum(np.abs(IF - np.ones_like(IF)))[0])
 freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 2, 100)
 hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)
 hht = gaussian_filter(hht, sigma=1)
