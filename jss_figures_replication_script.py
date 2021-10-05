@@ -16,6 +16,7 @@ from emd_utils import time_extension, Utility
 from scipy.interpolate import CubicSpline
 from emd_hilbert import Hilbert, hilbert_spectrum
 from emd_preprocess import Preprocess
+from emd_mean import Fluctuation
 from AdvEMDpy import EMD
 
 # alternate packages
@@ -29,6 +30,7 @@ pseudo_alg_time_series = np.sin(pseudo_alg_time) + np.sin(5 * pseudo_alg_time)
 pseudo_utils = Utility(time=pseudo_alg_time, time_series=pseudo_alg_time_series)
 
 # plot 0 - addition
+fig = plt.figure(figsize=(9, 4))
 ax = plt.subplot(111)
 plt.gcf().subplots_adjust(bottom=0.10)
 plt.title('First Iteration of Sifting Algorithm')
@@ -49,7 +51,6 @@ box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.95, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.savefig('jss_figures/pseudo_algorithm.png')
-plt.show()
 plt.show()
 
 knots = np.arange(12)
@@ -183,6 +184,9 @@ plt.show()
 window = 81
 fig, axs = plt.subplots(2, 1)
 fig.subplots_adjust(hspace=0.4)
+figure_size = plt.gcf().get_size_inches()
+factor = 0.8
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 plt.gcf().subplots_adjust(bottom=0.10)
 axs[0].set_title('Preprocess Filtering Demonstration')
 axs[1].set_title('Zoomed Region')
@@ -240,6 +244,9 @@ plt.show()
 # plot 1e - addition
 fig, axs = plt.subplots(2, 1)
 fig.subplots_adjust(hspace=0.4)
+figure_size = plt.gcf().get_size_inches()
+factor = 0.8
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 plt.gcf().subplots_adjust(bottom=0.10)
 axs[0].set_title('Preprocess Smoothing Demonstration')
 axs[1].set_title('Zoomed Region')
@@ -500,6 +507,9 @@ dash_final_time = np.linspace(improved_slope_based_maximum_time, improved_slope_
 dash_final = np.linspace(improved_slope_based_maximum, improved_slope_based_minimum, 101)
 
 ax = plt.subplot(111)
+figure_size = plt.gcf().get_size_inches()
+factor = 0.9
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 plt.gcf().subplots_adjust(bottom=0.10)
 plt.plot(time, time_series, LineWidth=2, label='Signal')
 plt.title('Slope-Based Edge Effects Example')
@@ -1030,6 +1040,9 @@ hs_ouputs = hilbert_spectrum(time, imfs_51, hts_51, ifs_51, max_frequency=12, pl
 
 # plot 6c
 ax = plt.subplot(111)
+figure_size = plt.gcf().get_size_inches()
+factor = 0.9
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of Simple Sinusoidal Time Seres with Added Noise', 50))
 x_hs, y, z = hs_ouputs
 z_min, z_max = 0, np.abs(z).max()
@@ -1046,6 +1059,44 @@ box_0 = ax.get_position()
 ax.set_position([box_0.x0, box_0.y0 + 0.05, box_0.width * 0.85, box_0.height * 0.9])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.savefig('jss_figures/DFA_hilbert_spectrum.png')
+plt.show()
+
+# plot 6c
+time = np.linspace(0, 5 * np.pi, 1001)
+time_series = np.cos(time) + np.cos(5 * time)
+knots = np.linspace(0, 5 * np.pi, 51)
+
+fluc = Fluctuation(time=time, time_series=time_series)
+max_unsmoothed = fluc.envelope_basis_function_approximation(knots_for_envelope=knots, extrema_type='maxima', smooth=False)
+max_smoothed = fluc.envelope_basis_function_approximation(knots_for_envelope=knots, extrema_type='maxima', smooth=True)
+min_unsmoothed = fluc.envelope_basis_function_approximation(knots_for_envelope=knots, extrema_type='minima', smooth=False)
+min_smoothed = fluc.envelope_basis_function_approximation(knots_for_envelope=knots, extrema_type='minima', smooth=True)
+util = Utility(time=time, time_series=time_series)
+maxima = util.max_bool_func_1st_order_fd()
+minima = util.min_bool_func_1st_order_fd()
+
+ax = plt.subplot(111)
+plt.gcf().subplots_adjust(bottom=0.10)
+plt.title(textwrap.fill('Plot Demonstrating Unsmoothed Extrema Envelopes if Schoenberg–Whitney Conditions are Not Satisfied', 50))
+plt.plot(time, time_series, label='Time series', zorder=2, LineWidth=2)
+plt.scatter(time[maxima], time_series[maxima], c='r', label='Maxima', zorder=10)
+plt.scatter(time[minima], time_series[minima], c='b', label='Minima', zorder=10)
+plt.plot(time, max_unsmoothed[0], label=textwrap.fill('Unsmoothed maxima envelope', 10), c='darkorange')
+plt.plot(time, max_smoothed[0], label=textwrap.fill('Smoothed maxima envelope', 10), c='red')
+plt.plot(time, min_unsmoothed[0], label=textwrap.fill('Unsmoothed minima envelope', 10), c='cyan')
+plt.plot(time, min_smoothed[0], label=textwrap.fill('Smoothed minima envelope', 10), c='blue')
+for knot in knots[:-1]:
+    plt.plot(knot * np.ones(101), np.linspace(-3.0, -2.0, 101), '--', c='grey', zorder=1)
+plt.plot(knots[-1] * np.ones(101), np.linspace(-3.0, -2.0, 101), '--', c='grey', label='Knots', zorder=1)
+plt.xticks((0, 1 * np.pi, 2 * np.pi, 3 * np.pi, 4 * np.pi, 5 * np.pi),
+           (r'$0$', r'$\pi$', r'2$\pi$', r'3$\pi$', r'4$\pi$', r'5$\pi$'))
+plt.yticks((-2, -1, 0, 1, 2), ('-2', '-1', '0', '1', '2'))
+plt.xlim(-0.25 * np.pi, 5.25 * np.pi)
+
+box_0 = ax.get_position()
+ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.84, box_0.height])
+ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+plt.savefig('jss_figures/Schoenberg_Whitney_Conditions.png')
 plt.show()
 
 # plot 7
@@ -1343,6 +1394,9 @@ freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 2, 100)
 hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)
 hht = gaussian_filter(hht, sigma=1)
 fig, ax = plt.subplots()
+figure_size = plt.gcf().get_size_inches()
+factor = 0.8
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of CO$_{2}$ Concentration using PyEMD 0.2.15', 45))
 plt.ylabel('Frequency (year$^{-1}$)')
 plt.xlabel('Time (years)')
@@ -1361,6 +1415,9 @@ freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 2, 100)
 hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)
 hht = gaussian_filter(hht, sigma=1)
 fig, ax = plt.subplots()
+figure_size = plt.gcf().get_size_inches()
+factor = 0.8
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of CO$_{2}$ Concentration using emd 0.4.0', 45))
 plt.ylabel('Frequency (year$^{-1}$)')
 plt.xlabel('Time (years)')
@@ -1422,6 +1479,9 @@ y = y / (2 * np.pi)
 
 z_min, z_max = 0, np.abs(z).max()
 fig, ax = plt.subplots()
+figure_size = plt.gcf().get_size_inches()
+factor = 0.7
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 ax.pcolormesh(x_hs, y, np.abs(z), cmap='gist_rainbow', vmin=z_min, vmax=z_max)
 ax.set_title(textwrap.fill(r'Gaussian Filtered Hilbert Spectrum of CO$_{2}$ Concentration using AdvEMDpy', 40))
 plt.ylabel('Frequency (year$^{-1}$)')
