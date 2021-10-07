@@ -145,7 +145,7 @@ for i in range(3):
 plt.savefig('jss_figures/knot_1.png')
 plt.show()
 
-# plot 1b - addition
+# plot 1c - addition
 knot_demonstrate_time = np.linspace(0, 2 * np.pi, 1001)
 knot_demonstrate_time_series = np.sin(knot_demonstrate_time) + np.sin(5 * knot_demonstrate_time)
 emd = EMD(time=knot_demonstrate_time, time_series=knot_demonstrate_time_series)
@@ -1266,6 +1266,9 @@ freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 0.2, 100)
 hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)
 hht = gaussian_filter(hht, sigma=1)
 ax = plt.subplot(111)
+figure_size = plt.gcf().get_size_inches()
+factor = 1.0
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of Duffing Equation using PyEMD 0.2.15', 40))
 plt.pcolormesh(t, freq_bins, hht, cmap='gist_rainbow', vmin=0, vmax=np.max(np.max(np.abs(hht))))
 plt.plot(t[:-1], 0.124 * np.ones_like(t[:-1]), '--', label=textwrap.fill('Hamiltonian frequency approximation', 15))
@@ -1289,6 +1292,9 @@ freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 0.2, 100)
 hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)
 hht = gaussian_filter(hht, sigma=1)
 ax = plt.subplot(111)
+figure_size = plt.gcf().get_size_inches()
+factor = 1.0
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of Duffing Equation using emd 0.4.0', 40))
 plt.pcolormesh(t, freq_bins, hht, cmap='gist_rainbow', vmin=0, vmax=np.max(np.max(np.abs(hht))))
 plt.plot(t[:-1], 0.124 * np.ones_like(t[:-1]), '--', label=textwrap.fill('Hamiltonian frequency approximation', 15))
@@ -1311,6 +1317,9 @@ emd_duff, emd_ht_duff, emd_if_duff, _, _, _, _ = emd_duffing.empirical_mode_deco
 
 fig, axs = plt.subplots(2, 1)
 plt.subplots_adjust(hspace=0.3)
+figure_size = plt.gcf().get_size_inches()
+factor = 0.8
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 axs[0].plot(t, emd_duff[1, :], label='AdvEMDpy')
 axs[0].plot(t, py_emd[0, :], '--', label='PyEMD 0.2.15')
 axs[0].plot(t, emd_sift[:, 0], '--', label='emd 0.4.0')
@@ -1354,6 +1363,9 @@ plt.title(textwrap.fill('Gaussian Filtered Hilbert Spectrum of Duffing Equation 
 x, y, z = hs_ouputs
 y = y / (2 * np.pi)
 z_min, z_max = 0, np.abs(z).max()
+figure_size = plt.gcf().get_size_inches()
+factor = 1.0
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 ax.pcolormesh(x, y, np.abs(z), cmap='gist_rainbow', vmin=z_min, vmax=z_max)
 plt.plot(t[:-1], 0.124 * np.ones_like(t[:-1]), '--', label=textwrap.fill('Hamiltonian frequency approximation', 15))
 plt.plot(t[:-1], 0.04 * np.ones_like(t[:-1]), 'g--', label=textwrap.fill('Driving function frequency', 15))

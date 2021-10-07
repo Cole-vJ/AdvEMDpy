@@ -1955,7 +1955,7 @@ class EMD:
                             plt.plot(knot_time, imf_envelope_mean)
                             plt.xlabel('t')
                             plt.ylabel('g(t)')
-                            plt.title(r'$ IMF ({imf}, {iter}) $'.format(imf=imf_count, iter=internal_iteration_count))
+                            plt.title('IMF ({imf}, {iter})'.format(imf=imf_count, iter=internal_iteration_count))
                             plt.show()
 
                         if stop_crit == 'sd':  # Standard Deviation
@@ -2447,7 +2447,7 @@ class EMD:
                             plt.plot(knot_time, intrinsic_mode_function_candidate)
                             plt.xlabel('t')
                             plt.ylabel('g(t)')
-                            plt.title(r'$ remainder = IMF ({},{}) $'.format(imf_count, internal_iteration_count))
+                            plt.title('remainder = IMF ({},{})'.format(imf_count, internal_iteration_count))
                             plt.show()
 
                         # print report
@@ -2507,8 +2507,8 @@ class EMD:
                         plt.plot(knot_time, imf_envelope_mean)
                         plt.xlabel('t')
                         plt.ylabel('g(t)')
-                        plt.title(r'$ IMF ({},{}) satisfies extrema and '
-                                  r'mean conditions $'.format(imf_count, internal_iteration_count))
+                        plt.title('IMF ({},{}) satisfies extrema and mean conditions'.format(imf_count,
+                                                                                             internal_iteration_count))
                         plt.show()
 
                 # set internal iteration to zero
