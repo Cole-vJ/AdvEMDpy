@@ -1,4 +1,10 @@
 
+#     ________
+#            /
+#      \    /
+#       \  /
+#        \/
+
 import random
 import textwrap
 import emd_mean

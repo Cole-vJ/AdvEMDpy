@@ -1,4 +1,10 @@
 
+#     ________
+#            /
+#      \    /
+#       \  /
+#        \/
+
 import time
 import pytest
 import numpy as np
@@ -1665,28 +1671,6 @@ class EMDUnitTests:
                 plt.plot(time_test, emd_test_sift[0][1:, :].T, label='IMFS')
                 plt.show()
 
-            # neural network extreme test - improved code
-            # time_test = np.linspace(0, 10, 2001)
-            # time_series_test = np.cos(10 * time_test) + np.cos(30 * time_test)
-            # knots = np.linspace(0, 10, 101)
-            # emd_test_sift_steep = \
-            #     emd_test.empirical_mode_decomposition(knots=knots, edge_effect='neural_network',
-            #                                           nn_m=200, nn_k=200, nn_method='steep_descent',
-            #                                           nn_learning_rate=1, nn_iter=10, verbose=True, debug=False)
-            # emd_test_sift_grad = \
-            #     emd_test.empirical_mode_decomposition(knots=knots, edge_effect='neural_network',
-            #                                           nn_m=200, nn_k=200, nn_method='grad_descent',
-            #                                           nn_learning_rate=0.01, nn_iter=10, verbose=True, debug=False)
-            # if plot:
-            #     plt.title('Extended Knot Sequence Test')
-            #     plt.plot(time_test, time_series_test, label='Time series')
-            #     plt.plot(time_test, emd_test_sift_steep[0][0, :], label='Steep smoothed time series')
-            #     plt.plot(time_test, emd_test_sift_steep[0][1:, :].T, label='Steep IMFS')
-            #     plt.plot(time_test, emd_test_sift_grad[0][0, :], '--', label='Grad smoothed time series')
-            #     plt.plot(time_test, emd_test_sift_grad[0][1:, :].T, '--', label='Grad IMFS')
-            #     plt.legend(loc='lower left')
-            #     plt.show()
-
             # test stopping criteria
             if plot:
                 plt.title('Stopping Criteria Test')
@@ -1733,14 +1717,14 @@ class EMDSpeedTests:
                                                                                             smooth=True,
                                                                                             edge_effect='none')
         end_advemdpy = time.time()
-        print(f'AdvEMDpy 0.0.0 runtime: {np.round((end_advemdpy - start_advemdpy) / 10, 5)} seconds')
+        print(f'AdvEMDpy 0.0.1 runtime: {np.round((end_advemdpy - start_advemdpy) / 10, 5)} seconds')
 
         pyemd = pyemd0215()
         start_py_emd = time.time()
         for i in range(10):
             _ = pyemd(time_series)
         end_py_emd = time.time()
-        print(f'pyemd 0.2.15 runtime: {np.round((end_py_emd - start_py_emd) / 10, 5)} seconds and '
+        print(f'pyemd 0.2.10 runtime: {np.round((end_py_emd - start_py_emd) / 10, 5)} seconds and '
               f'is {np.round((end_advemdpy - start_advemdpy) / (end_py_emd - start_py_emd))} times faster')
 
         start_emd = time.time()
@@ -1748,7 +1732,7 @@ class EMDSpeedTests:
             _ = emd040.sift.sift(time_series)
             emd040.spectra.frequency_transform(_, (1001 / (5 * np.pi)), 'hilbert')
         end_emd = time.time()
-        print(f'emd 0.4.0 runtime: {np.round((end_emd - start_emd) / 10, 5)} seconds and '
+        print(f'emd 0.3.3 runtime: {np.round((end_emd - start_emd) / 10, 5)} seconds and '
               f'is {np.round((end_advemdpy - start_advemdpy) / (end_emd - start_emd))} times faster')
 
 
@@ -1756,10 +1740,10 @@ if __name__ == "__main__":
 
     test_emd = EMDUnitTests(EMD, Basis, Hilbert, Fluctuation, Preprocess, Utility)
     test_emd.test_all()
-    # test_emd.test_emd_basis(plot=True)
-    # test_emd.test_emd_hilbert(plot=True)
-    # test_emd.test_emd_mean(plot=True)
-    # test_emd.test_emd_preprocess(plot=True)
-    # test_emd.test_emd_utility(plot=True)
-    # test_emd.try_break_emd(plot=True)
-    # EMDSpeedTests(EMD).test_speed()
+    test_emd.test_emd_basis(plot=True)
+    test_emd.test_emd_hilbert(plot=True)
+    test_emd.test_emd_mean(plot=True)
+    test_emd.test_emd_preprocess(plot=True)
+    test_emd.test_emd_utility(plot=True)
+    test_emd.try_break_emd(plot=True)
+    EMDSpeedTests(EMD).test_speed()
