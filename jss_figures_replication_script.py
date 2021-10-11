@@ -86,7 +86,7 @@ knot_demonstrate_time = np.linspace(0, 2 * np.pi, 1001)
 knot_demonstrate_time_series = np.sin(knot_demonstrate_time) + np.sin(5 * knot_demonstrate_time)
 knots_uniform = np.linspace(0, 2 * np.pi, 51)
 emd = EMD(time=knot_demonstrate_time, time_series=knot_demonstrate_time_series)
-imfs = emd.empirical_mode_decomposition(knots=knots_uniform, edge_effect='anti-symmetric')[0]
+imfs = emd.empirical_mode_decomposition(knots=knots_uniform, edge_effect='anti-symmetric', verbose=False)[0]
 
 fig, axs = plt.subplots(3, 1)
 fig.subplots_adjust(hspace=0.6)
@@ -121,7 +121,7 @@ knot_demonstrate_time = np.linspace(0, 2 * np.pi, 1001)
 knot_demonstrate_time_series = np.sin(knot_demonstrate_time) + np.sin(5 * knot_demonstrate_time)
 emd = EMD(time=knot_demonstrate_time, time_series=knot_demonstrate_time_series)
 imfs, _, _, _, knots, _, _ = emd.empirical_mode_decomposition(edge_effect='anti-symmetric',
-                                                              optimise_knots=1)
+                                                              optimise_knots=1, verbose=False)
 
 fig, axs = plt.subplots(3, 1)
 fig.subplots_adjust(hspace=0.6)
@@ -156,7 +156,7 @@ knot_demonstrate_time = np.linspace(0, 2 * np.pi, 1001)
 knot_demonstrate_time_series = np.sin(knot_demonstrate_time) + np.sin(5 * knot_demonstrate_time)
 emd = EMD(time=knot_demonstrate_time, time_series=knot_demonstrate_time_series)
 imfs, _, _, _, knots, _, _ = emd.empirical_mode_decomposition(edge_effect='anti-symmetric',
-                                                              optimise_knots=2)
+                                                              optimise_knots=2, verbose=False)
 
 fig, axs = plt.subplots(3, 1)
 fig.subplots_adjust(hspace=0.6)
@@ -943,7 +943,7 @@ plt.suptitle(textwrap.fill('Comparison of Trends Extracted with Different Knot S
 plt.subplots_adjust(hspace=0.1)
 axs[0].plot(time, time_series, label='Time series')
 axs[0].plot(time, imfs_51[1, :] + imfs_51[2, :] + imfs_51[3, :], label=textwrap.fill('Sum of IMF 1, IMF 2, & IMF 3 with 51 knots', 21))
-print(np.var(time_series - (imfs_51[1, :] + imfs_51[2, :] + imfs_51[3, :])))
+print(f'DFA fluctuation with 51 knots: {np.round(np.var(time_series - (imfs_51[1, :] + imfs_51[2, :] + imfs_51[3, :])), 3)}')
 for knot in knots_51:
     axs[0].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1)
 axs[0].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1, label='Knots')
@@ -960,7 +960,7 @@ axs[0].legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
 axs[1].plot(time, time_series, label='Time series')
 axs[1].plot(time, imfs_31[1, :] + imfs_31[2, :], label=textwrap.fill('Sum of IMF 1 and IMF 2 with 31 knots', 19))
 axs[1].plot(time, imfs_51[2, :] + imfs_51[3, :], label=textwrap.fill('Sum of IMF 2 and IMF 3 with 51 knots', 19))
-print(np.var(time_series - (imfs_31[1, :] + imfs_31[2, :])))
+print(f'DFA fluctuation with 31 knots: {np.round(np.var(time_series - (imfs_31[1, :] + imfs_31[2, :])), 3)}')
 for knot in knots_31:
     axs[1].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1)
 axs[1].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1, label='Knots')
@@ -978,7 +978,7 @@ axs[2].plot(time, time_series, label='Time series')
 axs[2].plot(time, imfs_11[1, :], label='IMF 1 with 11 knots')
 axs[2].plot(time, imfs_31[2, :], label='IMF 2 with 31 knots')
 axs[2].plot(time, imfs_51[3, :], label='IMF 3 with 51 knots')
-print(np.var(time_series - imfs_51[3, :]))
+print(f'DFA fluctuation with 11 knots: {np.round(np.var(time_series - imfs_51[3, :]), 3)}')
 for knot in knots_11:
     axs[2].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1)
 axs[2].plot(knot * np.ones(101), np.linspace(-5, 5, 101), '--', c='grey', zorder=1, label='Knots')
@@ -1156,7 +1156,7 @@ derivative_knots = np.linspace(knots[0], knots[-1], 31)
 # change (1) detrended_fluctuation_technique and (2) max_internal_iter and (3) debug (confusing with external debugging)
 emd = AdvEMDpy.EMD(time=derivative_time, time_series=derivative_of_lsq)
 imf_1_of_derivative = emd.empirical_mode_decomposition(knots=derivative_knots,
-                                                       knot_time=derivative_time, text=False)[0][1, :]
+                                                       knot_time=derivative_time, text=False, verbose=False)[0][1, :]
 
 utils = emd_utils.Utility(time=time[:-1], time_series=imf_1_of_derivative)
 optimal_maxima = np.r_[False, utils.derivative_forward_diff() < 0, False] & \
@@ -1334,11 +1334,11 @@ axs[0].set_ylim([-2, 2])
 axs[0].set_xlim([0, 150])
 
 axs[1].plot(t, emd_duff[2, :], label='AdvEMDpy')
-print(sum(abs(0.1 * np.cos(0.04 * 2 * np.pi * t) - emd_duff[2, :])))
+print(f'AdvEMDpy driving function error: {np.round(sum(abs(0.1 * np.cos(0.04 * 2 * np.pi * t) - emd_duff[2, :])), 3)}')
 axs[1].plot(t, py_emd[1, :], '--', label='PyEMD 0.2.15')
-print(sum(abs(0.1 * np.cos(0.04 * 2 * np.pi * t) - py_emd[1, :])))
+print(f'PyEMD driving function error: {np.round(sum(abs(0.1 * np.cos(0.04 * 2 * np.pi * t) - py_emd[1, :])), 3)}')
 axs[1].plot(t, emd_sift[:, 1], '--', label='emd 0.4.0')
-print(sum(abs(0.1 * np.cos(0.04 * 2 * np.pi * t) - emd_sift[:, 1])))
+print(f'emd driving function error: {np.round(sum(abs(0.1 * np.cos(0.04 * 2 * np.pi * t) - emd_sift[:, 1])), 3)}')
 axs[1].plot(t, 0.1 * np.cos(0.04 * 2 * np.pi * t), '--', label=r'$0.1$cos$(0.08{\pi}t)$')
 axs[1].set_title('IMF 2')
 axs[1].set_ylim([-0.2, 0.4])
@@ -1407,7 +1407,7 @@ time = np.asarray(time)
 pyemd = pyemd0215()
 py_emd = pyemd(signal)
 IP, IF, IA = emd040.spectra.frequency_transform(py_emd[:2, :].T, 12, 'hilbert')
-print(sum(np.abs(IF[:, 0] - np.ones_like(IF[:, 0]))))
+print(f'PyEMD annual frequency error: {np.round(sum(np.abs(IF[:, 0] - np.ones_like(IF[:, 0]))), 3)}')
 freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 2, 100)
 hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)
 hht = gaussian_filter(hht, sigma=1)
@@ -1428,7 +1428,7 @@ plt.show()
 
 emd_sift = emd040.sift.sift(signal)
 IP, IF, IA = emd040.spectra.frequency_transform(emd_sift[:, :1], 12, 'hilbert')
-print(sum(np.abs(IF - np.ones_like(IF)))[0])
+print(f'emd annual frequency error: {np.round(sum(np.abs(IF - np.ones_like(IF)))[0], 3)}')
 freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 2, 100)
 hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)
 hht = gaussian_filter(hht, sigma=1)
@@ -1455,7 +1455,7 @@ emd_example = AdvEMDpy.EMD(time=time, time_series=signal)
 
 imfs, hts, ifs, _, _, _, _ = \
     emd_example.empirical_mode_decomposition(knots=knots, knot_time=time, verbose=False)
-print(sum(np.abs(ifs[1, :] / (2 * np.pi) - np.ones_like(ifs[1, :]))))
+print(f'emd annual frequency error: {np.round(sum(np.abs(ifs[1, :] / (2 * np.pi) - np.ones_like(ifs[1, :]))), 3)}')
 
 fig, axs = plt.subplots(2, 2)
 plt.subplots_adjust(hspace=0.5)
