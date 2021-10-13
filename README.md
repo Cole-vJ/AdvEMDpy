@@ -1,7 +1,7 @@
 
-# Python EMD Package
+# Python AdvEMDpy Package
 
-EMD is a Python library that performs Empirical Mode Decomposition with numerous algorithmic variations and other optional additions.
+AdvEMDpy is a Python library that performs Empirical Mode Decomposition with numerous algorithmic variations available at key stages of the core algorithm. This package was developed out of research performed by Cole van Jaarsveldt, Matthew Ames, Gareth W. Peters, and Mike Chantler.
 
 
 
@@ -31,7 +31,8 @@ sample_knots = np.linspace(0, 5 * np.pi, 51)
 sample_knot_time = np.linspace(0, 5 * np.pi, 1001)
 
 emd = EMD(time=sample_time, time_series=sample_time_series)
-imfs, hts, ifs = emd.empirical_mode_decomposition(knots=sample_knots, knot_time=sample_knot_time)
+imfs, hts, ifs = emd.empirical_mode_decomposition(knots=sample_knots, 
+                                                  knot_time=sample_knot_time)
 
 plt.figure(1)
 plt.title('Sample EMD of First Component')
@@ -69,7 +70,7 @@ Process finished with exit code 0
 
 
 
-### Class EMD
+### Class AdvEMDpy
 
 #### Parameters
 
