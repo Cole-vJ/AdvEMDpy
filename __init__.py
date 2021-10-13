@@ -5,9 +5,9 @@
 #       \  /
 #        \/
 
-from AdvEMDpy.AdvEMDpy import EMD
-from AdvEMDpy.emd_basis import Basis
-from AdvEMDpy.emd_hilbert import Hilbert, hilbert_spectrum
-from AdvEMDpy.emd_mean import Fluctuation
-from AdvEMDpy.emd_preprocess import Preprocess
-from AdvEMDpy.emd_utils import Utility
+from AdvEMDpy import emd_utils
+from AdvEMDpy import emd_preprocess
+from AdvEMDpy import emd_basis
+from AdvEMDpy import emd_hilbert
+from AdvEMDpy import emd_mean
+from AdvEMDpy import AdvEMDpy
