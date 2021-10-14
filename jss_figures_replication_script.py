@@ -1455,7 +1455,7 @@ emd_example = AdvEMDpy.EMD(time=time, time_series=signal)
 
 imfs, hts, ifs, _, _, _, _ = \
     emd_example.empirical_mode_decomposition(knots=knots, knot_time=time, verbose=False)
-print(f'emd annual frequency error: {np.round(sum(np.abs(ifs[1, :] / (2 * np.pi) - np.ones_like(ifs[1, :]))), 3)}')
+print(f'AdvEMDpy annual frequency error: {np.round(sum(np.abs(ifs[1, :] / (2 * np.pi) - np.ones_like(ifs[1, :]))), 3)}')
 
 fig, axs = plt.subplots(2, 2)
 plt.subplots_adjust(hspace=0.5)
