@@ -161,7 +161,7 @@ def hilbert_spectrum(time: np.ndarray, imf_storage: np.ndarray, ht_storage: np.n
     # generate mesh grids for the x & y bounds
     x, y = np.meshgrid(time[:-1], np.linspace(0, max_frequency, freq_increments))
 
-    z = np.zeros_like(x)
+    z = np.zeros(np.shape(x))
     if which_imfs == 'all':
         range_to_return = range(1, np.shape(imf_storage)[0] - 1)
     else:

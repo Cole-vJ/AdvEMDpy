@@ -1054,7 +1054,7 @@ class EMD:
             Whether or not to use Ensemble Empirical Mode Decomposition routine - from:
 
                 Z. Wu and N. Huang. Ensemble Empirical Mode Decomposition: a noise-assisted data
-                analysis method. Advances in Adaptive Data Analysis, 1(1):1–41, 2009.
+                analysis method. Advances in Adaptive Carbon Data Analysis, 1(1):1–41, 2009.
 
         ensemble_sd : float
             Fraction of standard deviation of detreneded signal to used when generated noise assisting noise.

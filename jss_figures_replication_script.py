@@ -1182,6 +1182,8 @@ EEMD_minima_envelope = fluctuation.envelope_basis_function_approximation_fixed_p
 ax = plt.subplot(111)
 plt.gcf().subplots_adjust(bottom=0.10)
 plt.title('Detrended Fluctuation Analysis Examples')
+factor = 0.9
+plt.gcf().set_size_inches((figure_size[0], factor * figure_size[1]))
 plt.plot(time, time_series, LineWidth=2, label='Time series')
 plt.scatter(maxima_x, maxima_y, c='r', zorder=4, label='Maxima')
 plt.scatter(minima_x, minima_y, c='b', zorder=4, label='Minima')
@@ -1210,8 +1212,8 @@ plt.xlim(-0.25 * np.pi, 5.25 * np.pi)
 
 box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.84, box_0.height])
-ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/detrended_fluctuation_analysis.png')
+ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
+plt.savefig('jss_figures/detrended_fluctuation_analysis_resized_ssrn.png')
 plt.show()
 
 # Duffing Equation Example
@@ -1388,7 +1390,7 @@ plt.show()
 
 # Carbon Dioxide Concentration Example
 
-CO2_data = pd.read_csv('Data/co2_mm_mlo.csv', header=51)
+CO2_data = pd.read_csv('Carbon Data/co2_mm_mlo.csv', header=51)
 
 plt.plot(CO2_data['month'], CO2_data['decimal date'])
 plt.title(textwrap.fill('Mean Monthly Concentration of Carbon Dioxide in the Atmosphere', 35))
