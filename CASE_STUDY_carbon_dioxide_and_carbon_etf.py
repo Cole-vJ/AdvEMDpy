@@ -225,3 +225,58 @@ for ax in axs.flat:
 plt.gcf().subplots_adjust(bottom=0.15)
 plt.savefig('Real-World Figures/if_ecf1_and_ecf2.png')
 plt.show()
+
+fig, axs = plt.subplots(2, 2)
+plt.suptitle('Instantaneous Frequency of IMFs of ECF1 and ECF2')
+plt.subplots_adjust(hspace=0.35)
+plt.subplots_adjust(wspace=0.35)
+for i in np.arange(0, 2):
+    for j in np.arange(0, 2):
+        if i == 0:
+            x_hs, y, z = hilbert_spectrum(time, ecf1_imfs, ecf1_dthts, ecf1_dtifs / (2 * np.pi), max_frequency=max_freq / 10,
+                                          plot=False, freq_increments=freq_incr, filter_sigma=5,
+                                          which_imfs=[int(j + 4)])
+            axs[i, j].plot(x_hs[0, :], np.median(ecf1_dtifs[int(j + 4), :] / (2 * np.pi)) * np.ones_like(x_hs[0, :]), 'k--',
+                           label='Median')
+
+            if j == 1:
+                axs[i, j].plot(x_hs[0, :], (17.2 / 4411) * np.ones_like(x_hs[0, :]),
+                               '--', c='gold',
+                               label='Annual', Linewidth=2)
+
+        if i == 1:
+            x_hs, y, z = hilbert_spectrum(time, ecf2_imfs, ecf2_dthts, ecf2_dtifs / (2 * np.pi), max_frequency=max_freq / 10,
+                                          plot=False, freq_increments=freq_incr, filter_sigma=5,
+                                          which_imfs=[int(j + 4)])
+            axs[i, j].plot(x_hs[0, :], np.median(ecf1_dtifs[int(j + 4), :] / (2 * np.pi)) * np.ones_like(x_hs[0, :]), 'k--',
+                           label='Median')
+            if j == 1:
+                axs[i, j].plot(x_hs[0, :], (17.2 / 4411) * np.ones_like(x_hs[0, :]),
+                            '--', c='gold',
+                            label='Annual', Linewidth=2)
+        axs[i, j].pcolormesh(x_hs, y, np.abs(z), cmap='gist_rainbow', vmin=z_min, vmax=z_max)
+        axs[i, j].set_title('ECF{} IMF {}'.format(int(i+1), int(j+4)))
+
+# axs[0, 1].plot(time, imfs[0, :], label='Smoothed')
+axs[1, 1].legend(loc='upper left')
+
+axis = 0
+for ax in axs.flat:
+    if axis == 0:
+        ax.set(ylabel=R'Frequency (day$^{-1}$)')
+    if axis == 1:
+        pass
+    if axis == 2:
+        ax.set(ylabel=R'Frequency (day$^{-1}$)')
+        ax.set(xlabel='Time (days)')
+    if axis == 3:
+        ax.set(xlabel='Time (days)')
+    axis += 1
+
+# plt.gcf().subplots_adjust(bottom=0.15)
+plt.gcf().subplots_adjust(left=0.15)
+# box_0 = ax.get_position()
+# ax.set_position([box_0.x0 + 0.05, box_0.y0 + 0.10, box_0.width * 0.85, box_0.height * 0.9])
+# ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
+plt.savefig('Real-World Figures/if_ecf1_and_ecf2_45.png')
+plt.show()
