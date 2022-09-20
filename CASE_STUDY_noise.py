@@ -1,8 +1,9 @@
 
+import textwrap
 import numpy as np
 import seaborn as sns
+import colorednoise as cn
 import matplotlib.pyplot as plt
-import textwrap
 
 import AdvEMDpy
 from emd_hilbert import hilbert_spectrum, Hilbert, omega, theta
@@ -12,16 +13,29 @@ end = 1
 points = int(7.5 * 512)
 x = np.linspace(begin, end, points)
 
-for dB in [-1, -0.5, 0.5, 1]:
+type = 'blue'
+
+beta = 2  # Brownian noise
+sample = cn.powerlaw_psd_gaussian(beta, points)
+
+for dB in ['brown', 'brown', 'red', 'blue', 'violet']:
 
     signal_1 = np.sin(250 * np.pi * x ** 2)
     signal_2 = np.sin(80 * np.pi * x ** 2)
 
     signal = signal_1 + signal_2
 
-    noise = np.random.normal(0, (np.sum(signal ** 2) / len(signal)) / (10 ** dB), points)
-    plt.plot(signal + noise)
-    plt.show()
+    # noise = np.random.normal(0, (np.sum(signal ** 2) / len(signal)) / (10 ** dB), points)
+    # plt.plot(signal + noise)
+    # plt.show()
+    if dB == 'brown':
+        noise = cn.powerlaw_psd_gaussian(2, points)
+    if dB == 'red':
+        noise = cn.powerlaw_psd_gaussian(1, points)
+    if dB == 'blue':
+        noise = cn.powerlaw_psd_gaussian(-1, points)
+    if dB == 'purple':
+        noise = cn.powerlaw_psd_gaussian(-2, points)
 
     signal = signal + noise
 
@@ -31,7 +45,7 @@ for dB in [-1, -0.5, 0.5, 1]:
     plt.figure(2)
     ax = plt.subplot(111)
     plt.title('Frequency Modulation Example')
-    plt.plot(x, signal)
+    ax.plot(x, signal)
     plt.xticks(x_points, x_names)
     plt.ylabel('g(t)')
     plt.xlabel('t')
@@ -43,18 +57,19 @@ for dB in [-1, -0.5, 0.5, 1]:
 
     plt.savefig('FM_signals/frequency_modulation_{}.png'.format(dB))
 
-    plt.show()
+    # plt.show()
 
     # stft
 
     hilbert = Hilbert(x, signal)
     t_stft, f_stft, z_stft = hilbert.stft_custom(window_width=512, angular_frequency=False)
 
+    plt.figure(2)
     ax = plt.subplot(111)
     plt.gcf().subplots_adjust(bottom=0.10)
-    plt.pcolormesh((t_stft - (1 / (3840 / 128))), f_stft, np.abs(z_stft), vmin=0, vmax=np.max(np.max(np.abs(z_stft))))
-    plt.plot(t_stft[:-1], 250 * t_stft[:-1], 'b--', label='f(t) = 250t', LineWidth=2)
-    plt.plot(t_stft[:-1], 80 * t_stft[:-1], 'g--', label='f(t) = 80t', LineWidth=2)
+    ax.pcolormesh((t_stft - (1 / (3840 / 128))), f_stft, np.abs(z_stft), vmin=0, vmax=np.max(np.max(np.abs(z_stft))))
+    ax.plot(t_stft[:-1], 250 * t_stft[:-1], 'b--', label='f(t) = 250t', LineWidth=2)
+    ax.plot(t_stft[:-1], 80 * t_stft[:-1], 'g--', label='f(t) = 80t', LineWidth=2)
     plt.title(r'STFT - $ |\mathcal{STF}(g(t))(t,f)|^2 $')
     plt.ylabel('f')
     plt.xlabel('t')
@@ -67,7 +82,7 @@ for dB in [-1, -0.5, 0.5, 1]:
 
     plt.savefig('FM_signals/frequency_modulation_stft_{}.png'.format(dB))
 
-    plt.show()
+    # plt.show()
 
     # morlet wavelet
 
@@ -75,11 +90,12 @@ for dB in [-1, -0.5, 0.5, 1]:
     t_morlet, f_morlet, z_morlet = hilbert.morlet_wavelet_custom(window_width=512, angular_frequency=False)
     # z_morlet[0, :] = z_morlet[1, :]
 
+    plt.figure(2)
     ax = plt.subplot(111)
     plt.gcf().subplots_adjust(bottom=0.10)
-    plt.pcolormesh((t_morlet - (1 / (3840 / 128))), f_morlet, np.abs(z_morlet), vmin=0, vmax=np.max(np.max(np.abs(z_morlet))))
-    plt.plot(t_morlet[:-1], 250 * t_morlet[:-1], 'b--', label='f(t) = 250t', LineWidth=2)
-    plt.plot(t_morlet[:-1], 80 * t_morlet[:-1], 'g--', label='f(t) = 80t', LineWidth=2)
+    ax.pcolormesh((t_morlet - (1 / (3840 / 128))), f_morlet, np.abs(z_morlet), vmin=0, vmax=np.max(np.max(np.abs(z_morlet))))
+    ax.plot(t_morlet[:-1], 250 * t_morlet[:-1], 'b--', label='f(t) = 250t', LineWidth=2)
+    ax.plot(t_morlet[:-1], 80 * t_morlet[:-1], 'g--', label='f(t) = 80t', LineWidth=2)
     plt.title(r'Morlet - $ |(g(t))(t,f)|^2 $')
     plt.ylabel('f')
     plt.xlabel('t')
@@ -92,7 +108,7 @@ for dB in [-1, -0.5, 0.5, 1]:
 
     plt.savefig('FM_signals/frequency_modulation_morlet_{}.png'.format(dB))
 
-    plt.show()
+    # plt.show()
 
     # joint plot - top
 
@@ -130,7 +146,7 @@ for dB in [-1, -0.5, 0.5, 1]:
 
     plt.savefig('FM_signals/frequency_modulation_STFT_Morlet_{}.png'.format(dB))
 
-    plt.show()
+    # plt.show()
 
     # joint plot - bottom
 
@@ -143,11 +159,11 @@ for dB in [-1, -0.5, 0.5, 1]:
                                                                      max_internal_iter=20, mean_threshold=10,
                                                                      stopping_criterion_threshold=10, dtht=True)
 
-    for i in range(np.shape(imfs)[0]):
-        plt.plot(imfs[i, :])
-        plt.show()
+    # for i in range(np.shape(imfs)[0]):
+    #     plt.plot(imfs[i, :])
+    #     plt.show()
 
-    hs_ouputs = hilbert_spectrum(x, imfs, hts, ifs, max_frequency=260 * 2 * np.pi)
+    hs_ouputs = hilbert_spectrum(x, imfs, hts, ifs, max_frequency=260 * 2 * np.pi, plot=False)
 
     x_hs_stft, y_stft, z_stft = hs_ouputs
     y_stft = y_stft / (2 * np.pi)
@@ -155,8 +171,8 @@ for dB in [-1, -0.5, 0.5, 1]:
     z_min, z_max = 0, np.abs(z_stft).max()
     fig, ax = plt.subplots()
     ax.pcolormesh(x_hs_stft, y_stft, z_stft, cmap='gist_rainbow', vmin=z_min, vmax=z_max)
-    plt.plot(t_stft, 250 * t_stft, 'b--', label='f(t) = 250t', LineWidth=2)
-    plt.plot(t_stft, 80 * t_stft, 'g--', label='f(t) = 80t', LineWidth=2)
+    ax.plot(t_stft, 250 * t_stft, 'b--', label='f(t) = 250t', LineWidth=2)
+    ax.plot(t_stft, 80 * t_stft, 'g--', label='f(t) = 80t', LineWidth=2)
     ax.set_title(f'Gaussian Filtered Hilbert Spectrum - {int(points / 10)} Knots')
     ax.set_xlabel('t')
     ax.set_ylabel('f')
@@ -168,7 +184,7 @@ for dB in [-1, -0.5, 0.5, 1]:
 
     plt.savefig('FM_signals/frequency_modulation_emd_384_{}.png'.format(dB))
 
-    plt.show()
+    # plt.show()
 
     knots = np.linspace(begin, end, int(points / 5))
 
@@ -177,9 +193,9 @@ for dB in [-1, -0.5, 0.5, 1]:
                                                                      max_internal_iter=20, mean_threshold=10,
                                                                      stopping_criterion_threshold=10)
 
-    for i in range(np.shape(imfs)[0]):
-        plt.plot(imfs[i, :])
-        plt.show()
+    # for i in range(np.shape(imfs)[0]):
+    #     plt.plot(imfs[i, :])
+    #     plt.show()
 
     hs_ouputs = hilbert_spectrum(x, imfs, hts, ifs, max_frequency=260 * 2 * np.pi)
 
@@ -189,8 +205,8 @@ for dB in [-1, -0.5, 0.5, 1]:
     z_min, z_max = 0, np.abs(z_morlet).max()
     fig, ax = plt.subplots()
     ax.pcolormesh(x_hs_morlet, y_morlet, z_morlet, cmap='gist_rainbow', vmin=z_min, vmax=z_max)
-    plt.plot(t_stft, 250 * t_stft, 'b--', label='f(t) = 250t', LineWidth=2)
-    plt.plot(t_stft, 80 * t_stft, 'g--', label='f(t) = 80t', LineWidth=2)
+    ax.plot(t_stft, 250 * t_stft, 'b--', label='f(t) = 250t', LineWidth=2)
+    ax.plot(t_stft, 80 * t_stft, 'g--', label='f(t) = 80t', LineWidth=2)
     ax.set_title(f'Gaussian Filtered Hilbert Spectrum - {int(points / 5)} Knots')
     ax.set_xlabel('t')
     ax.set_ylabel('f')
@@ -202,7 +218,7 @@ for dB in [-1, -0.5, 0.5, 1]:
 
     plt.savefig('FM_signals/frequency_modulation_emd_768_{}.png'.format(dB))
 
-    plt.show()
+    # plt.show()
 
     # joint plot - top
 
@@ -241,7 +257,7 @@ for dB in [-1, -0.5, 0.5, 1]:
 
     plt.savefig('FM_signals/frequency_modulation_emd_384_768_{}.png'.format(dB))
 
-    plt.show()
+    # plt.show()
 
     # joint plot - bottom
 

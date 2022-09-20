@@ -131,6 +131,29 @@ ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
 plt.savefig('Real-World Figures/male_deaths_ww1_boom.png')
 plt.show()
 
+time = np.arange(1922, 2021, 1)
+ax = plt.subplot(111)
+plt.title('IMF 1 for Each 5 Year Stratified Age Group for Males')
+for i in np.arange(0, upper_limit, 5):
+    exec("emd = EMD(time=time, time_series=uk_male_" + str(i) + "_" + str(i + 4) + ")")
+    exec("imfs, _, ifs = emd.empirical_mode_decomposition(knots=np.arange(1922, 2020, 4), verbose=True, debug=False, "
+         "max_internal_iter=10)[:3]")
+    if i < 50:
+        pass
+    else:
+        exec("plt.plot(np.arange(1922, 2021, 1) - i + 50, imfs[1, :], label='Ages " + str(
+            i) + "-" + str(i + 4) + "')")
+plt.xlabel('Born')
+plt.ylabel('Deaths')
+# plt.xlim(1955, 2025)
+plt.xticks([1880, 1890, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020], [1830, 1840, 1850, 1860, 1870, 1880, 1890, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970], rotation='-45')
+plt.ylim(-6000, 16000)
+box_0 = ax.get_position()
+ax.set_position([box_0.x0 + 0.01, box_0.y0 + 0.05, box_0.width * 0.85, box_0.height * 0.98])
+ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
+plt.savefig('Real-World Figures/male_deaths_ww1_boom_other.png')
+plt.show()
+
 ax = plt.subplot(111)
 plt.title('IMF 1 for Each 5 Year Stratified Age Group for Females')
 for i in np.arange(0, upper_limit, 5):
@@ -180,6 +203,29 @@ box_0 = ax.get_position()
 ax.set_position([box_0.x0 + 0.01, box_0.y0 + 0.02, box_0.width * 0.85, box_0.height * 1.0])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
 plt.savefig('Real-World Figures/female_deaths_ww1_boom.png')
+plt.show()
+
+time = np.arange(1922, 2021, 1)
+ax = plt.subplot(111)
+plt.title('IMF 1 for Each 5 Year Stratified Age Group for Females')
+for i in np.arange(0, upper_limit, 5):
+    exec("emd = EMD(time=time, time_series=uk_female_" + str(i) + "_" + str(i + 4) + ")")
+    exec("imfs, _, ifs = emd.empirical_mode_decomposition(knots=np.arange(1922, 2020, 4), verbose=True, debug=False, "
+         "max_internal_iter=10)[:3]")
+    if i < 50:
+        pass
+    else:
+        exec("plt.plot(np.arange(1922, 2021, 1) - i + 50, imfs[1, :], label='Ages " + str(
+            i) + "-" + str(i + 4) + "')")
+plt.xlabel('Born')
+plt.ylabel('Deaths')
+# plt.xlim(1955, 2025)
+plt.xticks([1880, 1890, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020], [1830, 1840, 1850, 1860, 1870, 1880, 1890, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970], rotation='-45')
+plt.ylim(-6000, 16000)
+box_0 = ax.get_position()
+ax.set_position([box_0.x0 + 0.01, box_0.y0 + 0.05, box_0.width * 0.85, box_0.height * 0.98])
+ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
+plt.savefig('Real-World Figures/female_deaths_ww1_boom_other.png')
 plt.show()
 
 temp = 0

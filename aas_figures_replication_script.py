@@ -56,7 +56,7 @@ plt.xticks(ticks=[0, np.pi, 2 * np.pi],
 box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.95, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/pseudo_algorithm.png')
+plt.savefig('aas_figures/pseudo_algorithm.png')
 plt.show()
 
 knots = np.arange(12)
@@ -78,7 +78,7 @@ plt.xlim(4.4, 6.6)
 plt.plot(5 * np.ones(100), np.linspace(-0.2, 1.2, 100), 'k-')
 plt.plot(6 * np.ones(100), np.linspace(-0.2, 1.2, 100), 'k-')
 plt.legend(loc='upper left')
-plt.savefig('jss_figures/boundary_bases.png')
+plt.savefig('aas_figures/boundary_bases.png')
 plt.show()
 
 # plot 1a - addition
@@ -113,7 +113,7 @@ axs[2].plot(knots_uniform[0] * np.ones(101), np.linspace(-2, 2, 101), '--', c='g
 for i in range(3):
     for j in range(1, len(knots_uniform)):
         axs[i].plot(knots_uniform[j] * np.ones(101), np.linspace(-2, 2, 101), '--', c='grey')
-plt.savefig('jss_figures/knot_uniform.png')
+plt.savefig('aas_figures/knot_uniform.png')
 plt.show()
 
 # plot 1b - addition
@@ -148,7 +148,7 @@ axs[2].plot(knots[0] * np.ones(101), np.linspace(-2, 2, 101), '--', c='grey', la
 for i in range(3):
     for j in range(1, len(knots)):
         axs[i].plot(knots[j] * np.ones(101), np.linspace(-2, 2, 101), '--', c='grey')
-plt.savefig('jss_figures/knot_1.png')
+plt.savefig('aas_figures/knot_1.png')
 plt.show()
 
 # plot 1c - addition
@@ -183,7 +183,7 @@ axs[2].plot(knots[2][0] * np.ones(101), np.linspace(-2, 2, 101), '--', c='grey',
 for i in range(3):
     for j in range(1, len(knots[i])):
         axs[i].plot(knots[i][j] * np.ones(101), np.linspace(-2, 2, 101), '--', c='grey')
-plt.savefig('jss_figures/knot_2.png')
+plt.savefig('aas_figures/knot_2.png')
 plt.show()
 
 # plot 1d - addition
@@ -244,7 +244,7 @@ axs[0].set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.85, box_0.height
 axs[0].legend(loc='center left', bbox_to_anchor=(1, -0.15))
 box_1 = axs[1].get_position()
 axs[1].set_position([box_1.x0 - 0.05, box_1.y0, box_1.width * 0.85, box_1.height])
-plt.savefig('jss_figures/preprocess_filter.png')
+plt.savefig('aas_figures/preprocess_filter.png')
 plt.show()
 
 # plot 1e - addition
@@ -298,7 +298,7 @@ axs[0].set_position([box_0.x0 - 0.06, box_0.y0, box_0.width * 0.85, box_0.height
 axs[0].legend(loc='center left', bbox_to_anchor=(1, -0.15))
 box_1 = axs[1].get_position()
 axs[1].set_position([box_1.x0 - 0.06, box_1.y0, box_1.width * 0.85, box_1.height])
-plt.savefig('jss_figures/preprocess_smooth.png')
+plt.savefig('aas_figures/preprocess_smooth.png')
 plt.show()
 
 # plot 2
@@ -324,7 +324,7 @@ axs[1].plot(6 * np.ones(100), np.linspace(-0.2, 1.2, 100), 'k-')
 axs[1].set_xticks([5, 6])
 axs[1].set_xticklabels([r'$ \tau_k $', r'$ \tau_{k+1} $'])
 axs[1].set_xlim(4.5, 6.5)
-plt.savefig('jss_figures/comparing_bases.png')
+plt.savefig('aas_figures/comparing_bases.png')
 plt.show()
 
 # plot 3
@@ -429,7 +429,7 @@ plt.yticks((-2, -1, 0, 1, 2), ('-2', '-1', '0', '1', '2'))
 box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.85, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/edge_effects_symmetry_anti.png')
+plt.savefig('aas_figures/edge_effects_symmetry_anti.png')
 plt.show()
 
 # plot 4
@@ -566,7 +566,7 @@ plt.yticks((-3, -2, -1, 0, 1, 2), ('-3', '-2', '-1', '0', '1', '2'))
 box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.85, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/edge_effects_slope_based.png')
+plt.savefig('aas_figures/edge_effects_slope_based.png')
 plt.show()
 
 # plot 5
@@ -712,7 +712,7 @@ plt.yticks((-2, -1, 0, 1, 2), ('-2', '-1', '0', '1', '2'))
 box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.84, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/edge_effects_characteristic_wave.png')
+plt.savefig('aas_figures/edge_effects_characteristic_wave.png')
 plt.show()
 
 # plot 6
@@ -916,7 +916,7 @@ plt.yticks((-2, -1, 0, 1, 2), ('-2', '-1', '0', '1', '2'))
 box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.84, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/neural_network.png')
+plt.savefig('aas_figures/neural_network.png')
 plt.show()
 
 # plot 6a
@@ -991,7 +991,7 @@ axs[2].plot(np.linspace(0.95 * np.pi, 1.55 * np.pi, 101), 5.5 * np.ones(101), 'k
 axs[2].plot(np.linspace(0.95 * np.pi, 1.55 * np.pi, 101), -5.5 * np.ones(101), 'k--')
 axs[2].plot(0.95 * np.pi * np.ones(101), np.linspace(-5.5, 5.5, 101), 'k--')
 axs[2].plot(1.55 * np.pi * np.ones(101), np.linspace(-5.5, 5.5, 101), 'k--', label='Zoomed region')
-plt.savefig('jss_figures/DFA_different_trends.png')
+plt.savefig('aas_figures/DFA_different_trends.png')
 plt.show()
 
 # plot 6b
@@ -1039,7 +1039,7 @@ axs[2].set_position([box_2.x0 - 0.05, box_2.y0, box_2.width * 0.85, box_2.height
 axs[2].legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
 axs[2].set_ylim(-5.5, 5.5)
 axs[2].set_xlim(0.95 * np.pi, 1.55 * np.pi)
-plt.savefig('jss_figures/DFA_different_trends_zoomed.png')
+plt.savefig('aas_figures/DFA_different_trends_zoomed.png')
 plt.show()
 
 hs_ouputs = hilbert_spectrum(time, imfs_51, hts_51, ifs_51, max_frequency=12, plot=False)
@@ -1064,7 +1064,7 @@ plt.xlabel('Time (s)')
 box_0 = ax.get_position()
 ax.set_position([box_0.x0, box_0.y0 + 0.05, box_0.width * 0.85, box_0.height * 0.9])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/DFA_hilbert_spectrum.png')
+plt.savefig('aas_figures/DFA_hilbert_spectrum.png')
 plt.show()
 
 # plot 6c
@@ -1102,7 +1102,7 @@ plt.xlim(-0.25 * np.pi, 5.25 * np.pi)
 box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.84, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/Schoenberg_Whitney_Conditions.png')
+plt.savefig('aas_figures/Schoenberg_Whitney_Conditions.png')
 plt.show()
 
 # plot 7
@@ -1213,7 +1213,7 @@ plt.xlim(-0.25 * np.pi, 5.25 * np.pi)
 box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.84, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
-plt.savefig('jss_figures/detrended_fluctuation_analysis_resized_ssrn.png')
+plt.savefig('aas_figures/detrended_fluctuation_analysis_resized_ssrn.png')
 plt.show()
 
 # Duffing Equation Example
@@ -1262,7 +1262,7 @@ for ax in axs.flat:
     ax.set_xticks(x_points)
     ax.set_xticklabels(x_names)
     axis += 1
-plt.savefig('jss_figures/Duffing_equation.png')
+plt.savefig('aas_figures/Duffing_equation.png')
 plt.show()
 
 # compare other packages Duffing - top
@@ -1289,7 +1289,7 @@ plt.xlabel('Time (s)')
 box_0 = ax.get_position()
 ax.set_position([box_0.x0, box_0.y0 + 0.05, box_0.width * 0.75, box_0.height * 0.9])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/Duffing_equation_ht_pyemd.png')
+plt.savefig('aas_figures/Duffing_equation_ht_pyemd.png')
 plt.show()
 
 plt.show()
@@ -1315,7 +1315,7 @@ plt.xlabel('Time (s)')
 box_0 = ax.get_position()
 ax.set_position([box_0.x0, box_0.y0 + 0.05, box_0.width * 0.75, box_0.height * 0.9])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/Duffing_equation_ht_emd.png')
+plt.savefig('aas_figures/Duffing_equation_ht_emd.png')
 plt.show()
 
 # compare other packages Duffing - bottom
@@ -1361,7 +1361,7 @@ for ax in axs.flat:
     ax.set_xticks(x_points)
     ax.set_xticklabels(x_names)
     axis += 1
-plt.savefig('jss_figures/Duffing_equation_imfs.png')
+plt.savefig('aas_figures/Duffing_equation_imfs.png')
 plt.show()
 
 hs_ouputs = hilbert_spectrum(t, emd_duff, emd_ht_duff, emd_if_duff, max_frequency=1.3, plot=False)
@@ -1385,7 +1385,7 @@ plt.xlabel('Time (s)')
 box_0 = ax.get_position()
 ax.set_position([box_0.x0, box_0.y0 + 0.05, box_0.width * 0.75, box_0.height * 0.9])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/Duffing_equation_ht.png')
+plt.savefig('aas_figures/Duffing_equation_ht.png')
 plt.show()
 
 # Carbon Dioxide Concentration Example
@@ -1396,7 +1396,7 @@ plt.plot(CO2_data['month'], CO2_data['decimal date'])
 plt.title(textwrap.fill('Mean Monthly Concentration of Carbon Dioxide in the Atmosphere', 35))
 plt.ylabel('Parts per million')
 plt.xlabel('Time (years)')
-plt.savefig('jss_figures/CO2_concentration.png')
+plt.savefig('aas_figures/CO2_concentration.png')
 plt.show()
 
 signal = CO2_data['decimal date']
@@ -1425,7 +1425,7 @@ plt.plot(time, np.ones_like(time), 'k--', label=textwrap.fill('Annual cycle', 10
 box_0 = ax.get_position()
 ax.set_position([box_0.x0 + 0.0125, box_0.y0 + 0.075, box_0.width * 0.8, box_0.height * 0.9])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/CO2_Hilbert_pyemd.png')
+plt.savefig('aas_figures/CO2_Hilbert_pyemd.png')
 plt.show()
 
 emd_sift = emd040.sift.sift(signal)
@@ -1446,7 +1446,7 @@ plt.plot(time, np.ones_like(time), 'k--', label=textwrap.fill('Annual cycle', 10
 box_0 = ax.get_position()
 ax.set_position([box_0.x0 + 0.0125, box_0.y0 + 0.075, box_0.width * 0.8, box_0.height * 0.9])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/CO2_Hilbert_emd.png')
+plt.savefig('aas_figures/CO2_Hilbert_emd.png')
 plt.show()
 
 # compare other packages Carbon Dioxide - bottom
@@ -1489,7 +1489,7 @@ axs[1, 0].set_title('IMF 1')
 axs[1, 1].set_title('Residual')
 
 plt.gcf().subplots_adjust(bottom=0.15)
-plt.savefig('jss_figures/CO2_EMD.png')
+plt.savefig('aas_figures/CO2_EMD.png')
 plt.show()
 
 hs_ouputs = hilbert_spectrum(time, imfs, hts, ifs, max_frequency=10, which_imfs=[1], plot=False)
@@ -1512,5 +1512,5 @@ ax.axis([x_hs.min(), x_hs.max(), y.min(), y.max()])
 box_0 = ax.get_position()
 ax.set_position([box_0.x0 + 0.0125, box_0.y0 + 0.075, box_0.width * 0.8, box_0.height * 0.9])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.savefig('jss_figures/CO2_Hilbert.png')
+plt.savefig('aas_figures/CO2_Hilbert.png')
 plt.show()
