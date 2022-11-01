@@ -20,7 +20,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from AdvEMDpy import EMD
+from AdvEMDpy.AdvEMDpy import EMD
 
 sns.set(style='darkgrid')
 

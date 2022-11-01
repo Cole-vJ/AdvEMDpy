@@ -13,11 +13,6 @@ end = 1
 points = int(7.5 * 512)
 x = np.linspace(begin, end, points)
 
-type = 'blue'
-
-beta = 2  # Brownian noise
-sample = cn.powerlaw_psd_gaussian(beta, points)
-
 for dB in ['brown', 'brown', 'red', 'blue', 'violet']:
 
     signal_1 = np.sin(250 * np.pi * x ** 2)

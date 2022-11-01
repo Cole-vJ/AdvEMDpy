@@ -410,17 +410,24 @@ class Basis:
                 matrix_c[tau, :] = un_interpolated
         elif optimise_speed:
             time_extended = time_extension(self.time)
+            time_extended = time_extension(time_extended)
             basis_opt = Basis(time=time_extended, time_series=time_extended)
+            total_knots = len(knots)
+            mid_knots = total_knots
             un_interpolated = basis_opt.hilbert_b(knots=knots[0:5], degree=3)
             nan_bool = np.isnan(un_interpolated)  # find nan values and create bool
             un_interpolated[nan_bool] = np.interp(time_extended[nan_bool], time_extended[~nan_bool],
                                                   un_interpolated[~nan_bool], left=0, right=0)  # interpolate nan values
-            interpolated_subset = un_interpolated[int(len(self.time) - 1):int(2 * len(self.time) - 1)]
+            interpolated_subset = un_interpolated[int(4 * len(self.time) - 1):int(5 * len(self.time) - 1)]
             matrix_c[0, :] = interpolated_subset
+            # plt.plot(matrix_c[0, :])
             for tau in range(1, num_c):
+                if tau == 11:
+                    test = 0
                 matrix_c[tau, :] = \
-                    un_interpolated[int(len(self.time) - 1 - int(tau * ((len(self.time) - 1) / (len(knots) - 1)))):
-                                    int(2 * len(self.time) - 1 - int(tau * ((len(self.time) - 1) / (len(knots) - 1))))]
+                    un_interpolated[int(4 * len(self.time) - 1 - int(tau * ((len(self.time) - 1) / (len(knots) - 7)))):
+                                    int(5 * len(self.time) - 1 - int(tau * ((len(self.time) - 1) / (len(knots) - 7))))]
+                # plt.plot(matrix_c[tau, :])
 
         return matrix_c
 
