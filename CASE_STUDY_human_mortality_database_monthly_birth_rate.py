@@ -22,7 +22,7 @@ from emd_hilbert import hilbert_spectrum, Hilbert, omega, theta
 sns.set(style='darkgrid')
 
 # load raw data
-raw_data = pd.read_csv('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Human Mortality Database Data/monthly_birth_rate', header=0)
+raw_data = pd.read_csv('Human Mortality Database Data/monthly_birth_rate', header=0)
 uk_monthly_births = np.array(raw_data['Births'])
 monthly_births_refined = []
 
@@ -75,13 +75,13 @@ ax.set_title(textwrap.fill(r'Instantaneous Frequency of First IMF from UK Birth 
 x_hs, y, z = hs_ouputs
 z_min, z_max = 0, np.abs(z).max()
 ax.pcolormesh(x_hs, y, np.abs(z), cmap='gist_rainbow', vmin=z_min, vmax=z_max)
-plt.plot(time[:-1], np.ones_like(time[:-1]), 'k--', label=textwrap.fill('Annual cycle', 10), Linewidth=3)
+plt.plot(time[:-1], np.ones_like(time[:-1]), 'k--', label=textwrap.fill('Annual cycle', 10), linewidth=3)
 plt.plot(time[:-1], (1 / 0.75) * np.ones_like(time[:-1]), '--', c='gold', label=textwrap.fill('Every nine months', 10),
-         Linewidth=3)
+         linewidth=3)
 plt.plot((11 + 23 * 12) * np.ones(100), np.linspace(0, 2, 100), 'b--',
-         label=textwrap.fill('NHS provides pill to married women', 10), Linewidth=3)
+         label=textwrap.fill('NHS provides pill to married women', 10), linewidth=3)
 plt.plot((11 + 29 * 12) * np.ones(100), np.linspace(0, 2, 100), 'g--',
-         label=textwrap.fill('NHS provides pill to unmarried women', 10), Linewidth=3)
+         label=textwrap.fill('NHS provides pill to unmarried women', 10), linewidth=3)
 plt.xticks(np.arange(11, 972, int(5 * 12)), np.arange(1938, 2019, 5), rotation=-45, fontsize=8)
 plt.ylim(0, 2)
 plt.ylabel('Frequency (year$^{-1}$)')

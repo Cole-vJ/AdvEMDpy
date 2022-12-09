@@ -53,24 +53,24 @@ for beta in colour_dict.keys():
     plt.gcf().subplots_adjust(bottom=0.15)
     if beta == 2:
         plt.plot(np.log10(f), np.log10((1 / f) ** 2) - np.mean(np.log10((1 / f)[1:] ** 2) - np.log10(s)[1:]),
-                 color='black', label=r'$P \propto \frac{1}{f^2}$ ', Linewidth=2, zorder=2)
+                 color='black', label=r'$P \propto \frac{1}{f^2}$ ', linewidth=2, zorder=2)
     elif beta == 1:
         plt.plot(np.log10(f), np.log10(1 / f) - np.mean(np.log10(1 / f)[1:] - np.log10(s)[1:]),
-                 color='black', label=r'$P \propto \frac{1}{f}$ ', Linewidth=2, zorder=2)
+                 color='black', label=r'$P \propto \frac{1}{f}$ ', linewidth=2, zorder=2)
     elif beta == 0:
         plt.plot(np.log10(f), np.ones_like(f) - np.mean(np.ones_like(f)[1:] - np.log10(s)[1:]),
-                 color='black', label=r'$P \propto k$ ', Linewidth=2, zorder=2)
+                 color='black', label=r'$P \propto k$ ', linewidth=2, zorder=2)
     elif beta == -1:
         plt.plot(np.log10(f), np.log10(f) - np.mean(np.log10(f)[1:] - np.log10(s)[1:]),
-                 color='black', label=r'$P \propto f$ ', Linewidth=2, zorder=2)
+                 color='black', label=r'$P \propto f$ ', linewidth=2, zorder=2)
     elif beta == -2:
         plt.plot(np.log10(f), np.log10(f ** 2) - np.mean(np.log10(f ** 2)[1:] - np.log10(s)[1:]),
-                 color='black', label=r'$P \propto f^2$ ', Linewidth=2, zorder=2)
+                 color='black', label=r'$P \propto f^2$ ', linewidth=2, zorder=2)
     if beta != 0:
         colour = colour_dict[beta]
     else:
         colour = 'Grey'
-    plt.plot(np.log10(f), np.log10(s), color=f'{colour}', label=f'{colour_dict[beta]} noise', Linewidth=2, zorder=1)
+    plt.plot(np.log10(f), np.log10(s), color=f'{colour}', label=f'{colour_dict[beta]} noise', linewidth=2, zorder=1)
     plt.legend(loc='lower left')
     plt.title(f'{colour_dict[beta]} Noise Power Spectral Density')
     plt.xlabel('log10(Frequency)')
@@ -98,7 +98,7 @@ iterations = 10
 
 for i in range(iterations):
 
-    beta = np.random.random_integers(low=-2, high=2)
+    beta = np.random.randint(-2, 2 + 1)
     new_time_series = time_series + cn.powerlaw_psd_gaussian(beta, len(time_series)) * sd_time_series * fseemd_sd
     emd = EMD(time=time, time_series=new_time_series)
     imfs = emd.empirical_mode_decomposition(smooth=True, stop_crit_threshold=1, max_imfs=3, verbose=False)[0]
@@ -370,7 +370,8 @@ plt.scatter(time[ri], cum_signal_CAMF[ri], c='r', zorder=3)
 plt.show()
 
 emd = EMD(time=time, time_series=temp_freq)
-imfs, hts, ifs = emd.empirical_mode_decomposition(knots=knots, knot_time=time, smooth=True, stop_crit_threshold=1)[:3]
+imfs, _, _, _, _, hts, ifs = emd.empirical_mode_decomposition(knots=knots, knot_time=time, smooth=True,
+                                                              stop_crit_threshold=1, dtht=True)
 
 hilbert = hilbert_spectrum(time=time, imf_storage=imfs, ht_storage=hts, if_storage=ifs, max_frequency=5, plot=False)
 

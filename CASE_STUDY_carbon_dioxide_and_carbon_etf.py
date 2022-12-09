@@ -19,9 +19,9 @@ from sklearn import linear_model
 sns.set(style='darkgrid')
 
 # load raw data
-raw_data_ecf1 = pd.read_csv('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ECF1', header=0)
+raw_data_ecf1 = pd.read_csv('Carbon Data/ECF1', header=0)
 raw_data_ecf1 = raw_data_ecf1.set_index('time')
-raw_data_ecf2 = pd.read_csv('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ECF2', header=0)
+raw_data_ecf2 = pd.read_csv('Carbon Data/ECF2', header=0)
 raw_data_ecf2 = raw_data_ecf2.set_index('time')
 efc1_contains = raw_data_ecf1.index.difference(raw_data_ecf2.index)
 raw_data_ecf1 = raw_data_ecf1.reindex(raw_data_ecf2.index)
@@ -59,34 +59,34 @@ plt.show()
 #                                                                                         1001), verbose=True,
 #                                                                       debug=False, max_internal_iter=30,
 #                                                                       matrix=True, dtht=True)
-# np.save('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf1_imfs.npy', imfs)
-# np.save('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf1_hts.npy', hts)
-# np.save('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf1_ifs.npy', ifs)
-# np.save('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf1_dthts.npy', dthts)
-# np.save('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf1_dtifs.npy', dtifs)
+# np.save('Carbon Data/ecf1_imfs.npy', imfs)
+# np.save('Carbon Data/ecf1_hts.npy', hts)
+# np.save('Carbon Data/ecf1_ifs.npy', ifs)
+# np.save('Carbon Data/ecf1_dthts.npy', dthts)
+# np.save('Carbon Data/ecf1_dtifs.npy', dtifs)
 #
 # emd = EMD(time=np.arange(len(raw_data_ecf2_close)), time_series=raw_data_ecf2_close)
 # imfs, hts, ifs, _, _, dthts, dtifs = emd.empirical_mode_decomposition(knots=np.linspace(0, len(raw_data_ecf2_close),
 #                                                                                         1001), verbose=True,
 #                                                                       debug=False, max_internal_iter=30, matrix=True,
 #                                                                       dtht=True)
-# np.save('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf2_imfs.npy', imfs)
-# np.save('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf2_hts.npy', hts)
-# np.save('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf2_ifs.npy', ifs)
-# np.save('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf2_dthts.npy', dthts)
-# np.save('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf2_dtifs.npy', dtifs)
+# np.save('Carbon Data/ecf2_imfs.npy', imfs)
+# np.save('Carbon Data/ecf2_hts.npy', hts)
+# np.save('Carbon Data/ecf2_ifs.npy', ifs)
+# np.save('Carbon Data/ecf2_dthts.npy', dthts)
+# np.save('Carbon Data/ecf2_dtifs.npy', dtifs)
 
-ecf1_imfs = np.load('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf1_imfs.npy')
-ecf1_hts = np.load('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf1_hts.npy')
-ecf1_ifs = np.load('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf1_ifs.npy')
-ecf1_dthts = np.load('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf1_dthts.npy')
-ecf1_dtifs = np.load('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf1_dtifs.npy')
+ecf1_imfs = np.load('Carbon Data/ecf1_imfs.npy')
+ecf1_hts = np.load('Carbon Data/ecf1_hts.npy')
+ecf1_ifs = np.load('Carbon Data/ecf1_ifs.npy')
+ecf1_dthts = np.load('Carbon Data/ecf1_dthts.npy')
+ecf1_dtifs = np.load('Carbon Data/ecf1_dtifs.npy')
 
-ecf2_imfs = np.load('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf2_imfs.npy')
-ecf2_hts = np.load('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf2_hts.npy')
-ecf2_ifs = np.load('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf2_ifs.npy')
-ecf2_dthts = np.load('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf2_dthts.npy')
-ecf2_dtifs = np.load('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Carbon Data/ecf2_dtifs.npy')
+ecf2_imfs = np.load('Carbon Data/ecf2_imfs.npy')
+ecf2_hts = np.load('Carbon Data/ecf2_hts.npy')
+ecf2_ifs = np.load('Carbon Data/ecf2_ifs.npy')
+ecf2_dthts = np.load('Carbon Data/ecf2_dthts.npy')
+ecf2_dtifs = np.load('Carbon Data/ecf2_dtifs.npy')
 
 # x = np.arange(len(ecf2_dtifs[1, :]))
 # y = 1 / (ecf2_dtifs[1, :] / (2 * np.pi))
@@ -142,9 +142,9 @@ coef = np.linalg.lstsq(X.T, y, rcond=None)[0]
 clf = linear_model.Lasso(alpha=1000000)
 clf.fit(X.T, y)
 m, b = np.polyfit(x, y, 1)
-plt.plot(x, np.median(y) * np.ones(len(y)), '--', label='Median', Linewidth=3)
-plt.plot(x, m * x + b, '--', label='Least squares', Linewidth=3)
-plt.plot(x, np.median(y) - (clf.intercept_ - b) + m * x, '--', label=textwrap.fill('Median least squares', 15), Linewidth=3)
+plt.plot(x, np.median(y) * np.ones(len(y)), '--', label='Median', linewidth=3)
+plt.plot(x, m * x + b, '--', label='Least squares', linewidth=3)
+plt.plot(x, np.median(y) - (clf.intercept_ - b) + m * x, '--', label=textwrap.fill('Median least squares', 15), linewidth=3)
 
 box_0 = ax.get_position()
 ax.set_position([box_0.x0, box_0.y0 + 0.05, box_0.width * 0.85, box_0.height * 0.9])
@@ -175,9 +175,9 @@ coef = np.linalg.lstsq(X.T, y, rcond=None)[0]
 clf = linear_model.Lasso(alpha=1000000)
 clf.fit(X.T, y)
 m, b = np.polyfit(x, y, 1)
-plt.plot(x, np.median(y) * np.ones(len(y)), '--', label='Median', Linewidth=3)
-plt.plot(x, m * x + b, '--', label='Least squares', Linewidth=3)
-plt.plot(x, np.median(y) - (clf.intercept_ - b) + m * x, '--', label=textwrap.fill('Median least squares', 15), Linewidth=3)
+plt.plot(x, np.median(y) * np.ones(len(y)), '--', label='Median', linewidth=3)
+plt.plot(x, m * x + b, '--', label='Least squares', linewidth=3)
+plt.plot(x, np.median(y) - (clf.intercept_ - b) + m * x, '--', label=textwrap.fill('Median least squares', 15), linewidth=3)
 
 box_0 = ax.get_position()
 ax.set_position([box_0.x0, box_0.y0 + 0.05, box_0.width * 0.85, box_0.height * 0.9])
@@ -242,7 +242,7 @@ for i in np.arange(0, 2):
             if j == 1:
                 axs[i, j].plot(x_hs[0, :], (17.2 / 4411) * np.ones_like(x_hs[0, :]),
                                '--', c='gold',
-                               label='Annual', Linewidth=2)
+                               label='Annual', linewidth=2)
 
         if i == 1:
             x_hs, y, z = hilbert_spectrum(time, ecf2_imfs, ecf2_dthts, ecf2_dtifs / (2 * np.pi), max_frequency=max_freq / 10,
@@ -253,7 +253,7 @@ for i in np.arange(0, 2):
             if j == 1:
                 axs[i, j].plot(x_hs[0, :], (17.2 / 4411) * np.ones_like(x_hs[0, :]),
                             '--', c='gold',
-                            label='Annual', Linewidth=2)
+                            label='Annual', linewidth=2)
         axs[i, j].pcolormesh(x_hs, y, np.abs(z), cmap='gist_rainbow', vmin=z_min, vmax=z_max)
         axs[i, j].set_title('ECF{} IMF {}'.format(int(i+1), int(j+4)))
 

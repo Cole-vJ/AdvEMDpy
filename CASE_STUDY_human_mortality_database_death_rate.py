@@ -21,7 +21,7 @@ sns.set(style='darkgrid')
 
 # load raw data
 raw_data = \
-    pd.read_csv('/home/cole/Desktop/Cole/Cole Documents/AdvEMDpy/AdvEMDpy/Human Mortality Database Data/death_rate',
+    pd.read_csv('Human Mortality Database Data/death_rate',
                 header=0, delim_whitespace=True)
 
 for i in np.arange(0, 110, 5):
