@@ -5,13 +5,102 @@ AdvEMDpy is a Python library that performs Empirical Mode Decomposition with num
 
 
 
-## Installation
+## Linux Installation
+
+Create new environment (if needed) with specific version of Python. Python is backwards compatible such that packages working on Python version 3.7 will work on Python version 3.8 et cetera, but the reverse is not true. Python version 3.7 is recommended for the best user experience.
+
+```bash
+conda create -n environment_name python=3.7
+```
+
+Proceed.
+
+```bash
+proceed ([y]/n)?
+```
+
+Activate new environment.
+
+```bash
+source activate environment_name
+```
+
+Install specific package versions from attached requirements file.
+
+```bash
+pip install -r /path/to/requirements/file/requirements.txt
+```
+
+Install 'AdvEMDpy' package.
 
 ```bash
 pip install AdvEMDpy
 ```
 
+## Windows Installation
 
+Create new environment (if needed) with specific version of Python.
+
+```bash
+virtualenv --python="/usr/bin/python3.7" environment_name
+```
+
+Activate new environment. Navigate to environment location or adjust input accordingly.
+
+```bash
+C:\path\to\environments> environment_name\Scripts\activate
+```
+
+or
+
+```bash
+C:> path\to\environments\environment_name\Scripts\activate
+```
+
+### Common Error
+
+#### Requests (Caused by SSLError("Can't connect to HTTPS URL because the SSL module is not available.")
+
+https://stackoverflow.com/questions/54135206/requests-caused-by-sslerrorcant-connect-to-https-url-because-the-ssl-module
+
+### Solution
+
+#### Windows 10 | Miniconda 3 | Python 3.7
+
+Copy the following files:
+
+libcrypto-1_1-x64.dll
+libcrypto-1_1-x64.pdb
+libssl-1_1-x64.dll
+libssl-1_1-x64.pdb
+
+from:
+
+```
+C:\Users\MyUser\Miniconda3\Library\bin
+```
+
+to:
+
+```
+C:\Users\MyUser\Miniconda3\DLLs
+```
+
+https://stackoverflow.com/questions/45954528/pip-is-configured-with-locations-that-require-tls-ssl-however-the-ssl-module-in/62264725#62264725
+
+https://github.com/conda/conda/issues/8273
+
+Install specific package versions from attached requirements file.
+
+```bash
+pip install -r path\to\requirements\file\requirements.txt
+```
+
+Install 'AdvEMDpy' package.
+
+```bash
+pip install AdvEMDpy
+```
 
 ## Usage
 
