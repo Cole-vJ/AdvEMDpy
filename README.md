@@ -69,10 +69,10 @@ https://stackoverflow.com/questions/54135206/requests-caused-by-sslerrorcant-con
 
 Copy the following files:
 
-libcrypto-1_1-x64.dll
-libcrypto-1_1-x64.pdb
-libssl-1_1-x64.dll
-libssl-1_1-x64.pdb
+- libcrypto-1_1-x64.dll
+- libcrypto-1_1-x64.pdb
+- libssl-1_1-x64.dll
+- libssl-1_1-x64.pdb
 
 from:
 
