@@ -1,0 +1,84 @@
+
+Has been shown to work on:
+
+Linux
+Windows
+MacOS
+
+Specifically:
+
+(1)
+
+Manufacturer
+- product: Inspiron 15 7000 Gaming (0798)
+- vendor: Dell Inc.
+
+Memory
+- size: 16 GiB
+   
+CPU
+- product: Intel® Core™ i7-7700HQ CPU @ 2.80GHz
+
+OS
+- type: GNU/Linux
+- os: Ubuntu 22.04
+- architecture: x86_64
+
+(2)
+
+Manufacturer
+- product: XPS 13-7390 (P82G)
+- vendor: Dell Inc.
+
+Memory:
+- size: 15.3 GiB
+
+CPU
+- product: Intel® Core™ i7-10510U CPU @ 1.80GHz × 8
+
+OS
+- type: GNU/Linux
+- os: Ubuntu 18.04.6 LTS
+- architecture: x86_64
+
+(3)
+
+Manufacturer
+- product: XPS 13-7390 (P82G)
+- vendor: Dell Inc.
+
+Memory:
+- size: 15.3 GiB
+
+CPU
+- product: Intel® Core™ i7-10510U CPU @ 1.80GHz × 8
+
+OS
+- type: Windows
+- os: Windows 10 Home
+- architecture: x86_64
+
+(4)
+
+Manufacturer
+- product: NS50MU
+- vendor: Clevo
+
+Memory:
+- size: 62.6 GiB
+
+CPU
+- product: 11th Gen Intel© Core™ i7-1165G7 @ 2.80GHz × 4
+
+OS
+- type: Linux
+- os: Linux Mint 20.2 Cinnamon 5.0.7
+- architecture: x86_64 bits
+
+(5)
+
+
+
+
+
+

@@ -97,6 +97,7 @@ for dB in ['brown', 'brown', 'red', 'blue', 'violet']:
     plt.xticks(x_points, x_names)
     plt.ylim(0, 260)
 
+
     box_0 = ax.get_position()
     ax.set_position([box_0.x0 + 0.0125, box_0.y0 + 0.075, box_0.width * 0.8, box_0.height * 0.9])
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))

@@ -33,6 +33,7 @@ for i in range(len(uk_monthly_births)):
         monthly_births_refined.append(uk_monthly_births[i])
 monthly_births_refined = np.asarray(monthly_births_refined)
 
+fig = plt.figure(figsize=(9, 4))
 ax = plt.subplot(111)
 plt.plot(np.arange(len(monthly_births_refined)), monthly_births_refined)
 plt.plot((7 + 7 * 12) * np.ones(100), np.linspace(50000, 90000, 100), 'k--', label=textwrap.fill('End of World War 2', 13))
@@ -52,7 +53,7 @@ plt.xticks(np.arange(11, 972, int(5 * 12)), np.arange(1938, 2019, 5), rotation=-
 plt.yticks(np.arange(40000, 100001, 10000), fontsize=8)
 
 box_0 = ax.get_position()
-ax.set_position([box_0.x0, box_0.y0 + 0.02, box_0.width * 0.85, box_0.height * 1.0])
+ax.set_position([box_0.x0, box_0.y0 + 0.05, box_0.width * 0.85, box_0.height * 0.95])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
 plt.savefig('Real-World Figures/births.png')
 plt.show()

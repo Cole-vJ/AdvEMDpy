@@ -2,9 +2,11 @@
 https://pypi.org/project/EMD-signal/
 https://pypi.org/project/emd/
 
+stable versions:
 emd==0.3.3
 EMD-signal==0.2.10
 
+latest versions:
 emd==0.5.5
 EMD-signal==1.2.3
 

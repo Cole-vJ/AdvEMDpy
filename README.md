@@ -1,7 +1,7 @@
 
 # Python AdvEMDpy Package
 
-AdvEMDpy is a Python library that performs Empirical Mode Decomposition with numerous algorithmic variations available at key stages of the core algorithm. This package was developed out of research performed by Cole van Jaarsveldt, Matthew Ames, Gareth W. Peters, and Mike Chantler.
+AdvEMDpy is a Python library that performs Empirical Mode Decomposition with numerous algorithmic variations available at key stages of the core algorithm. This package was developed out of research performed by Cole van Jaarsveldt, Matthew Ames, Gareth W. Peters, and Mike Chantler. This package was built entirely using Python 3.7.0 - Python guarantees backwards compatibility which should ensure that this software package functions as expected on all future Python versions.
 
 
 
@@ -25,7 +25,7 @@ Activate new environment.
 source activate environment_name
 ```
 
-Install specific package versions from attached requirements file.
+Install specific package versions from attached requirements file. If this is not done first, when pip installing 'AdvEMDpy', one can not guarantee that all of the required packages downloaded will be those exact versions specified in 'requirements.txt'.
 
 ```bash
 pip install -r /path/to/requirements/file/requirements.txt
@@ -90,7 +90,7 @@ https://stackoverflow.com/questions/45954528/pip-is-configured-with-locations-th
 
 https://github.com/conda/conda/issues/8273
 
-Install specific package versions from attached requirements file.
+Install specific package versions from attached requirements file. If this is not done first, when pip installing 'AdvEMDpy', one can not guarantee that all of the required packages downloaded will be those exact versions specified in 'requirements.txt'.
 
 ```bash
 pip install -r path\to\requirements\file\requirements.txt
@@ -127,14 +127,14 @@ plt.figure(1)
 plt.title('Sample EMD of First Component')
 plt.plot(sample_time, np.cos(5 * sample_time))
 plt.plot(sample_time, imfs[1, :], '--')
-plt.savefig('README_Images/Figure_1.png')
+# plt.savefig('README_Images/Figure_1.png')  # originally used to save figures reproduced below - will result in error without correct folder in directory specified.
 plt.show()
 
 plt.figure(2)
 plt.title('Sample EMD of Second Component')
 plt.plot(sample_time, np.cos(sample_time))
 plt.plot(sample_time, imfs[2, :], '--')
-plt.savefig('README_Images/Figure_2.png')
+# plt.savefig('README_Images/Figure_2.png')  # originally used to save figures reproduced below - will result in error without correct folder in directory specified.
 plt.show()
 ```
 

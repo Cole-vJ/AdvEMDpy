@@ -26,7 +26,7 @@ from emd_mean import Fluctuation
 from AdvEMDpy import EMD
 
 # alternate packages
-from PyEMD import EMD as pyemd0215
+from PyEMD import EMD as pyemd0210
 import emd as emd040
 
 sns.set(style='darkgrid')
@@ -67,6 +67,9 @@ b_spline_basis = basis.cubic_b_spline(knots)
 chsi_basis = basis.chsi_basis(knots)
 
 # plot 1
+# fig = plt.figure(figsize=(8, 4))  # original
+fig = plt.figure(figsize=(8, 5))  # supplement
+ax = plt.subplot(111)
 plt.title('Non-Natural Cubic B-Spline Bases at Boundary')
 plt.plot(time[500:], b_spline_basis[2, 500:].T, '--', label=r'$ B_{-3,4}(t) $')
 plt.plot(time[500:], b_spline_basis[3, 500:].T, '--', label=r'$ B_{-2,4}(t) $')
@@ -74,9 +77,9 @@ plt.plot(time[500:], b_spline_basis[4, 500:].T, '--', label=r'$ B_{-1,4}(t) $')
 plt.plot(time[500:], b_spline_basis[5, 500:].T, '--', label=r'$ B_{0,4}(t) $')
 plt.plot(time[500:], b_spline_basis[6, 500:].T, '--', label=r'$ B_{1,4}(t) $')
 plt.xticks([5, 6], [r'$ \tau_0 $', r'$ \tau_1 $'])
-plt.xlim(4.4, 6.6)
-plt.plot(5 * np.ones(100), np.linspace(-0.2, 1.2, 100), 'k-')
-plt.plot(6 * np.ones(100), np.linspace(-0.2, 1.2, 100), 'k-')
+plt.xlim(4.5, 6.6)
+plt.plot(5 * np.ones(100), np.linspace(-0.2, 0.8, 100), 'k-')
+plt.plot(6 * np.ones(100), np.linspace(-0.2, 0.8, 100), 'k-')
 plt.legend(loc='upper left')
 plt.savefig('figures/boundary_bases.png')
 plt.show()
@@ -1267,7 +1270,7 @@ plt.show()
 
 # compare other packages Duffing - top
 
-pyemd = pyemd0215()
+pyemd = pyemd0210()
 py_emd = pyemd(x)
 IP, IF, IA = emd040.spectra.frequency_transform(py_emd.T, 10, 'hilbert')
 freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 0.2, 100)
@@ -1406,12 +1409,12 @@ time = np.asarray(time)
 
 # compare other packages Carbon Dioxide - top
 
-pyemd = pyemd0215()
+pyemd = pyemd0210()
 py_emd = pyemd(signal)
 IP, IF, IA = emd040.spectra.frequency_transform(py_emd[:2, :].T, 12, 'hilbert')
 print(f'PyEMD annual frequency error: {np.round(sum(np.abs(IF[:, 0] - np.ones_like(IF[:, 0]))), 3)}')
 freq_edges, freq_bins = emd040.spectra.define_hist_bins(0, 2, 100)
-hht = emd040.spectra.hilberthuang(IF, IA, freq_edges, sum_time=False)[1]
+hht = emd040.spectra.hilberthuang(IF, IA, freq_edges)[1]
 hht = gaussian_filter(hht, sigma=1)
 fig, ax = plt.subplots()
 figure_size = plt.gcf().get_size_inches()
