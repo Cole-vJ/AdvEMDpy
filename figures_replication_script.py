@@ -169,12 +169,12 @@ axs[0].plot(knot_demonstrate_time, knot_demonstrate_time_series, linewidth=2, zo
 axs[0].set_yticks(ticks=[-2, 0, 2])
 axs[0].set_xticks(ticks=[0, np.pi, 2 * np.pi])
 axs[0].set_xticklabels(labels=['0', r'$\pi$', r'$2\pi$'])
-axs[1].set_title('IMF 1 and Dynamically Knots')
+axs[1].set_title('IMF 1 and Dynamically Optimised Knots')
 axs[1].plot(knot_demonstrate_time, imfs[1, :], linewidth=2, zorder=100)
 axs[1].set_yticks(ticks=[-2, 0, 2])
 axs[1].set_xticks(ticks=[0, np.pi, 2 * np.pi])
 axs[1].set_xticklabels(labels=['0', r'$\pi$', r'$2\pi$'])
-axs[2].set_title('IMF 2 and Dynamically Knots')
+axs[2].set_title('IMF 2 and Dynamically Optimised Knots')
 axs[2].plot(knot_demonstrate_time, imfs[2, :], linewidth=2, zorder=100)
 axs[2].set_yticks(ticks=[-2, 0, 2])
 axs[2].set_xticks(ticks=[0, np.pi, 2 * np.pi])
@@ -433,6 +433,7 @@ box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.85, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.savefig('figures/edge_effects_symmetry_anti.png')
+plt.savefig('figures/edge_effects_symmetry_anti.pdf')
 plt.show()
 
 # plot 4
@@ -570,6 +571,7 @@ box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.85, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.savefig('figures/edge_effects_slope_based.png')
+plt.savefig('figures/edge_effects_slope_based.pdf')
 plt.show()
 
 # plot 5
@@ -716,6 +718,7 @@ box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.84, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.savefig('figures/edge_effects_characteristic_wave.png')
+plt.savefig('figures/edge_effects_characteristic_wave.pdf')
 plt.show()
 
 # plot 6
@@ -920,6 +923,7 @@ box_0 = ax.get_position()
 ax.set_position([box_0.x0 - 0.05, box_0.y0, box_0.width * 0.84, box_0.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.savefig('figures/neural_network.png')
+plt.savefig('figures/neural_network.pdf')
 plt.show()
 
 # plot 6a
