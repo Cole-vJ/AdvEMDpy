@@ -1085,7 +1085,6 @@ class EMD:
 
         output_knots : bool
             Optionally output knots - only relevant when optionally optimised.
-            Increases ouputs to 4 or 5 depending if coefficients are outputted.
 
         knot_error : float
             Maximum error allowed on increment of knot distance optimisation from:
