@@ -119,7 +119,7 @@ class Preprocess:
         self.time = time
         self.time_series = time_series
 
-    def downsample(self, window_function: np.str = 'hamming', decimation_level: np.int = 20,
+    def downsample(self, window_function: str = 'hamming', decimation_level: np.int = 20,
                    window_factor: np.int = 20, decimate: bool = True) -> (np.ndarray, np.ndarray):
         """
         Downsample time series.

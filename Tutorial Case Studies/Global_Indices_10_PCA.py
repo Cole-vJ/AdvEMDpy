@@ -434,7 +434,7 @@ for i in range(np.shape(variables_reconstruct)[1]):
     variables_reconstruct_if[:, i] = omega(dates_int, theta(variables_reconstruct[:, i], variables_reconstruct_ht[:, i]))
 
 fig, axs = plt.subplots(5, 2)
-fig.suptitle(textwrap.fill(r'Market Factors and Instantaneous Frequencies', 50))
+fig.suptitle(textwrap.fill(r'Empirical Market Factors and Instantaneous Frequencies', 50))
 fig.subplots_adjust(hspace=0.3, wspace=0.3, bottom=0.15)
 for i in range(0, 5):
     if int(i + 1) != 5:
