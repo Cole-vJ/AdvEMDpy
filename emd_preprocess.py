@@ -119,8 +119,8 @@ class Preprocess:
         self.time = time
         self.time_series = time_series
 
-    def downsample(self, window_function: str = 'hamming', decimation_level: np.int = 20,
-                   window_factor: np.int = 20, decimate: bool = True) -> (np.ndarray, np.ndarray):
+    def downsample(self, window_function: str = 'hamming', decimation_level: int = 20,
+                   window_factor: int = 20, decimate: bool = True) -> (np.ndarray, np.ndarray):
         """
         Downsample time series.
 
@@ -198,7 +198,7 @@ class Preprocess:
 
         return decimated_time, downsampled_and_decimated_time_series
 
-    def median_filter(self, window_width: np.int = 51) -> (np.ndarray, np.ndarray):
+    def median_filter(self, window_width: int = 51) -> (np.ndarray, np.ndarray):
         """
         Median filters the provided time series.
 
@@ -237,7 +237,7 @@ class Preprocess:
 
         return median_filtered_time, median_filtered_time_series
 
-    def mean_filter(self, window_width: np.int = 51) -> (np.ndarray, np.ndarray):
+    def mean_filter(self, window_width: int = 51) -> (np.ndarray, np.ndarray):
         """
         Mean filters the provided time series.
 
